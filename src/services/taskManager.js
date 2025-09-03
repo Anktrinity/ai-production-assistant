@@ -49,30 +49,15 @@ class TaskManager {
   initializeDefaultTasks() {
     if (this.tasks.size === 0) {
       const defaultTasks = [
+        // Core Infrastructure Tasks
         {
-          title: 'Venue booking confirmation',
-          description: 'Confirm venue availability and setup requirements',
+          title: 'Venue booking and setup',
+          description: 'Confirm venue availability and complete setup requirements',
           category: 'venue',
           priority: 'critical',
           dueDate: this.getDateBeforeHackathon(30),
           estimatedHours: 4,
           isOnCriticalPath: true
-        },
-        {
-          title: 'Sponsor outreach campaign',
-          description: 'Contact potential sponsors and secure funding',
-          category: 'sponsors',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(45),
-          estimatedHours: 20
-        },
-        {
-          title: 'Registration platform setup',
-          description: 'Set up and test participant registration system',
-          category: 'registration',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(21),
-          estimatedHours: 8
         },
         {
           title: 'Catering arrangements',
@@ -83,8 +68,8 @@ class TaskManager {
           estimatedHours: 6
         },
         {
-          title: 'Technical infrastructure setup',
-          description: 'WiFi, power, AV equipment, and tech support',
+          title: 'Technical infrastructure',
+          description: 'Set up WiFi, power, AV equipment, and tech support',
           category: 'tech',
           priority: 'critical',
           dueDate: this.getDateBeforeHackathon(7),
@@ -92,7 +77,23 @@ class TaskManager {
           isOnCriticalPath: true
         },
         {
-          title: 'Judge recruitment and briefing',
+          title: 'Sponsor outreach',
+          description: 'Contact potential sponsors and secure funding partnerships',
+          category: 'sponsors',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(45),
+          estimatedHours: 20
+        },
+        {
+          title: 'Registration system',
+          description: 'Set up and test participant registration platform',
+          category: 'registration',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(21),
+          estimatedHours: 8
+        },
+        {
+          title: 'Judge recruitment',
           description: 'Recruit qualified judges and brief them on criteria',
           category: 'judging',
           priority: 'high',
@@ -100,20 +101,129 @@ class TaskManager {
           estimatedHours: 10
         },
         {
+          title: 'Marketing campaigns',
+          description: 'Launch comprehensive social media and PR campaigns',
+          category: 'marketing',
+          priority: 'medium',
+          dueDate: this.getDateBeforeHackathon(35),
+          estimatedHours: 15
+        },
+        {
           title: 'Prize procurement',
-          description: 'Purchase or arrange prizes for winners',
+          description: 'Purchase or arrange prizes and awards for winners',
           category: 'prizes',
           priority: 'medium',
           dueDate: this.getDateBeforeHackathon(10),
           estimatedHours: 4
         },
+        
+        // Specific New Tasks
         {
-          title: 'Marketing campaign launch',
-          description: 'Launch social media and PR campaign',
+          title: 'Design promotional graphics for social media',
+          description: 'Create engaging visual content for social media marketing campaigns',
+          category: 'marketing',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(28),
+          estimatedHours: 12,
+          tags: ['design', 'social-media', 'graphics']
+        },
+        {
+          title: 'Finalize event agenda and speaker lineup',
+          description: 'Complete the event schedule and confirm all speakers',
+          category: 'content',
+          priority: 'critical',
+          dueDate: this.getDateBeforeHackathon(21),
+          estimatedHours: 15,
+          isOnCriticalPath: true,
+          tags: ['agenda', 'speakers', 'schedule']
+        },
+        {
+          title: 'Feature Glitch the Robot',
+          description: 'Integrate and showcase Glitch the Robot in event programming',
+          category: 'content',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(14),
+          estimatedHours: 8,
+          tags: ['glitch', 'robot', 'feature']
+        },
+        {
+          title: 'Brain Behinds the Bots on Social',
+          description: 'Create and execute social media campaign highlighting bot creators',
           category: 'marketing',
           priority: 'medium',
-          dueDate: this.getDateBeforeHackathon(35),
-          estimatedHours: 15
+          dueDate: this.getDateBeforeHackathon(20),
+          estimatedHours: 10,
+          tags: ['social-media', 'bots', 'creators']
+        },
+        {
+          title: 'Build the virtual event platform VCS',
+          description: 'Develop and deploy the Virtual Conference System (VCS) platform',
+          category: 'tech',
+          priority: 'critical',
+          dueDate: this.getDateBeforeHackathon(30),
+          estimatedHours: 40,
+          isOnCriticalPath: true,
+          tags: ['vcs', 'platform', 'virtual-event']
+        },
+        {
+          title: 'Connect VCS to Luma registration integration',
+          description: 'Integrate VCS platform with Luma registration system',
+          category: 'tech',
+          priority: 'critical',
+          dueDate: this.getDateBeforeHackathon(21),
+          estimatedHours: 12,
+          isOnCriticalPath: true,
+          dependencies: ['Build the virtual event platform VCS'],
+          tags: ['vcs', 'luma', 'integration']
+        },
+        {
+          title: 'Set up Chatbase Bot integration in VCS',
+          description: 'Configure Chatbase Bot functionality within the VCS platform',
+          category: 'tech',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(18),
+          estimatedHours: 8,
+          dependencies: ['Build the virtual event platform VCS'],
+          tags: ['chatbase', 'bot', 'vcs']
+        },
+        {
+          title: 'Set up Snapsight integration in VCS',
+          description: 'Integrate Snapsight functionality into the VCS platform',
+          category: 'tech',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(18),
+          estimatedHours: 8,
+          dependencies: ['Build the virtual event platform VCS'],
+          tags: ['snapsight', 'integration', 'vcs']
+        },
+        {
+          title: 'Design graphics overlay package for LIVE virtual event',
+          description: 'Create comprehensive graphics package for live streaming',
+          category: 'content',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(12),
+          estimatedHours: 16,
+          tags: ['graphics', 'overlay', 'live-stream']
+        },
+        {
+          title: 'Upload & Build Graphics Scenes in Streamyard',
+          description: 'Set up all graphic scenes and overlays in Streamyard platform',
+          category: 'tech',
+          priority: 'high',
+          dueDate: this.getDateBeforeHackathon(7),
+          estimatedHours: 6,
+          dependencies: ['Design graphics overlay package for LIVE virtual event'],
+          tags: ['streamyard', 'graphics', 'scenes']
+        },
+        {
+          title: 'Get a Headcount of all Sponsors for Booths in VCS',
+          description: 'Collect sponsor booth requirements and finalize virtual booth allocation',
+          category: 'sponsors',
+          priority: 'medium',
+          dueDate: this.getDateBeforeHackathon(14),
+          estimatedHours: 4,
+          dependencies: ['Build the virtual event platform VCS'],
+          tags: ['sponsors', 'booths', 'headcount']
         }
       ];
 
