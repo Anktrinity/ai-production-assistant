@@ -5,15 +5,25 @@ const logger = require('../utils/logger');
 
 class SlackBot {
   constructor() {
-    this.app = new App({
-      token: process.env.SLACK_BOT_TOKEN,
-      signingSecret: process.env.SLACK_SIGNING_SECRET,
-      socketMode: false // Use HTTP mode for production
-    });
-
-    this.setupCommands();
-    this.setupEvents();
+    this.app = null;
+    this.isConfigured = false;
     this.isStarted = false;
+    
+    // Only initialize if credentials are available
+    if (process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) {
+      this.app = new App({
+        token: process.env.SLACK_BOT_TOKEN,
+        signingSecret: process.env.SLACK_SIGNING_SECRET,
+        socketMode: false // Use HTTP mode for production
+      });
+
+      this.setupCommands();
+      this.setupEvents();
+      this.isConfigured = true;
+      logger.info('Slack bot initialized and configured');
+    } else {
+      logger.warn('Slack bot not configured - missing SLACK_BOT_TOKEN or SLACK_SIGNING_SECRET');
+    }
   }
 
   setupCommands() {
@@ -481,15 +491,21 @@ class SlackBot {
   }
 
   async start(port = 3001) {
+    if (!this.isConfigured) {
+      logger.warn('Cannot start Slack bot - not configured');
+      return false;
+    }
+
     if (this.isStarted) {
       logger.warn('Slack bot already started');
-      return;
+      return true;
     }
 
     try {
       await this.app.start(port);
       this.isStarted = true;
       logger.info(`Slack bot started on port ${port}`);
+      return true;
     } catch (error) {
       logger.error('Failed to start Slack bot:', error);
       throw error;

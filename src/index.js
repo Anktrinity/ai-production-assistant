@@ -259,13 +259,9 @@ io.on('connection', (socket) => {
 });
 
 // Start Slack bot if configured
-if (process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) {
-  slackBot.start(3001).catch(error => {
-    logger.error('Failed to start Slack bot:', error);
-  });
-} else {
-  logger.warn('Slack bot not started - missing SLACK_BOT_TOKEN or SLACK_SIGNING_SECRET');
-}
+slackBot.start(3001).catch(error => {
+  logger.error('Failed to start Slack bot:', error);
+});
 
 // Error handling
 app.use((err, req, res, next) => {
