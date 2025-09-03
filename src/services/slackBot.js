@@ -1,0 +1,508 @@
+const { App } = require('@slack/bolt');
+const taskManager = require('./taskManager');
+const smartTaskCreator = require('./smartTaskCreator');
+const logger = require('../utils/logger');
+
+class SlackBot {
+  constructor() {
+    this.app = new App({
+      token: process.env.SLACK_BOT_TOKEN,
+      signingSecret: process.env.SLACK_SIGNING_SECRET,
+      socketMode: false // Use HTTP mode for production
+    });
+
+    this.setupCommands();
+    this.setupEvents();
+    this.isStarted = false;
+  }
+
+  setupCommands() {
+    // Main command for task management
+    this.app.command('/hackathon', async ({ command, ack, respond, client }) => {
+      await ack();
+
+      try {
+        const args = command.text.trim().split(' ');
+        const action = args[0]?.toLowerCase();
+
+        switch (action) {
+          case 'status':
+            await this.handleStatusCommand(respond);
+            break;
+          case 'tasks':
+            await this.handleTasksCommand(args.slice(1), respond);
+            break;
+          case 'create':
+            await this.handleCreateCommand(args.slice(1).join(' '), respond);
+            break;
+          case 'assign':
+            await this.handleAssignCommand(args.slice(1), respond);
+            break;
+          case 'complete':
+            await this.handleCompleteCommand(args.slice(1), respond);
+            break;
+          case 'gaps':
+            await this.handleGapsCommand(respond);
+            break;
+          case 'summary':
+            await this.handleSummaryCommand(respond);
+            break;
+          case 'help':
+          default:
+            await this.handleHelpCommand(respond);
+        }
+      } catch (error) {
+        logger.error('Slack command error:', error);
+        await respond({
+          text: '❌ Sorry, something went wrong. Please try again.',
+          response_type: 'ephemeral'
+        });
+      }
+    });
+
+    // Quick task creation
+    this.app.command('/task', async ({ command, ack, respond }) => {
+      await ack();
+      
+      if (!command.text.trim()) {
+        await respond({
+          text: 'Usage: `/task [description]`\nExample: `/task Book venue for September 24th`',
+          response_type: 'ephemeral'
+        });
+        return;
+      }
+
+      try {
+        const result = await smartTaskCreator.parseNaturalLanguageRequest(command.text, {
+          channel: command.channel_name,
+          user: command.user_name
+        });
+
+        const tasksText = result.tasks.map(task => 
+          `• *${task.title}* (${task.category}, due: ${new Date(task.dueDate).toLocaleDateString()})`
+        ).join('\n');
+
+        await respond({
+          text: `✅ Created ${result.tasks.length} task(s):\n${tasksText}`,
+          response_type: 'in_channel'
+        });
+
+      } catch (error) {
+        logger.error('Task creation error:', error);
+        await respond({
+          text: '❌ Failed to create task. Please try again with more details.',
+          response_type: 'ephemeral'
+        });
+      }
+    });
+  }
+
+  setupEvents() {
+    // Listen for mentions
+    this.app.event('app_mention', async ({ event, client }) => {
+      try {
+        const message = event.text.replace(/<@[^>]+>/g, '').trim();
+        
+        if (message.toLowerCase().includes('status') || message.toLowerCase().includes('update')) {
+          await this.sendStatusUpdate(client, event.channel);
+        } else if (message.toLowerCase().includes('create') || message.toLowerCase().includes('task')) {
+          // Extract task from mention
+          const taskDescription = message.replace(/(create|task|add)/gi, '').trim();
+          if (taskDescription) {
+            const result = await smartTaskCreator.parseNaturalLanguageRequest(taskDescription);
+            await client.chat.postMessage({
+              channel: event.channel,
+              text: `✅ Created task: *${result.tasks[0]?.title}*`
+            });
+          }
+        } else {
+          // General AI assistance
+          await this.handleGeneralQuery(client, event.channel, message);
+        }
+      } catch (error) {
+        logger.error('App mention error:', error);
+      }
+    });
+
+    // Handle reactions for task completion
+    this.app.event('reaction_added', async ({ event, client }) => {
+      if (event.reaction === 'white_check_mark' || event.reaction === 'heavy_check_mark') {
+        // Look for task IDs in the message
+        try {
+          const result = await client.conversations.history({
+            channel: event.item.channel,
+            latest: event.item.ts,
+            limit: 1,
+            inclusive: true
+          });
+
+          const message = result.messages[0];
+          const taskIdMatch = message.text.match(/task_[\w]+/);
+          
+          if (taskIdMatch) {
+            const taskId = taskIdMatch[0];
+            const task = taskManager.getTask(taskId);
+            if (task && task.status !== 'completed') {
+              taskManager.updateTask(taskId, { status: 'completed' });
+              await client.chat.postMessage({
+                channel: event.item.channel,
+                text: `🎉 Task completed: *${task.title}*`
+              });
+            }
+          }
+        } catch (error) {
+          logger.error('Reaction handling error:', error);
+        }
+      }
+    });
+  }
+
+  async handleStatusCommand(respond) {
+    const stats = taskManager.getCompletionStats();
+    const daysLeft = taskManager.getDaysUntilHackathon();
+    
+    const statusEmoji = stats.completionRate >= 80 ? '🟢' : 
+                       stats.completionRate >= 60 ? '🟡' : '🔴';
+    
+    await respond({
+      text: `${statusEmoji} *Hackathon Status*`,
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: `🎯 AI Hackathon - ${daysLeft} days remaining`
+          }
+        },
+        {
+          type: 'section',
+          fields: [
+            {
+              type: 'mrkdwn',
+              text: `*Progress:* ${stats.completionRate}%`
+            },
+            {
+              type: 'mrkdwn',
+              text: `*Completed:* ${stats.completed}/${stats.total}`
+            },
+            {
+              type: 'mrkdwn',
+              text: `*In Progress:* ${stats.inProgress}`
+            },
+            {
+              type: 'mrkdwn',
+              text: `*Overdue:* ${stats.overdue}`
+            }
+          ]
+        }
+      ],
+      response_type: 'in_channel'
+    });
+  }
+
+  async handleTasksCommand(args, respond) {
+    const filter = args[0]?.toLowerCase();
+    let tasks;
+    let title = 'All Tasks';
+
+    switch (filter) {
+      case 'overdue':
+        tasks = taskManager.getOverdueTasks();
+        title = '🚨 Overdue Tasks';
+        break;
+      case 'upcoming':
+        tasks = taskManager.getUpcomingTasks(7);
+        title = '📅 Upcoming Tasks (Next 7 Days)';
+        break;
+      case 'critical':
+        tasks = taskManager.getCriticalPathTasks();
+        title = '⚡ Critical Path Tasks';
+        break;
+      case 'pending':
+        tasks = taskManager.getTasksByStatus('pending');
+        title = '⏳ Pending Tasks';
+        break;
+      default:
+        tasks = taskManager.getAllTasks().slice(0, 10);
+        title = '📋 Recent Tasks';
+    }
+
+    if (tasks.length === 0) {
+      await respond({
+        text: `No ${filter || 'recent'} tasks found.`,
+        response_type: 'ephemeral'
+      });
+      return;
+    }
+
+    const taskBlocks = tasks.slice(0, 10).map(task => {
+      const urgency = task.getUrgencyLevel();
+      const emoji = urgency === 'overdue' ? '🚨' : 
+                   urgency === 'critical' ? '⚡' : 
+                   urgency === 'high' ? '🔴' : 
+                   urgency === 'medium' ? '🟡' : '🟢';
+      
+      const dueText = task.dueDate ? 
+        `Due: ${new Date(task.dueDate).toLocaleDateString()}` : 
+        'No due date';
+      
+      return {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `${emoji} *${task.title}*\n_${task.category}_ | ${dueText} | ${task.status}\n${task.description.substring(0, 100)}${task.description.length > 100 ? '...' : ''}`
+        },
+        accessory: {
+          type: 'button',
+          text: {
+            type: 'plain_text',
+            text: task.status === 'completed' ? '✅' : 'Complete'
+          },
+          value: task.id,
+          action_id: 'complete_task'
+        }
+      };
+    });
+
+    await respond({
+      text: title,
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: title
+          }
+        },
+        ...taskBlocks
+      ],
+      response_type: 'in_channel'
+    });
+  }
+
+  async handleCreateCommand(description, respond) {
+    if (!description.trim()) {
+      await respond({
+        text: 'Usage: `/hackathon create [task description]`',
+        response_type: 'ephemeral'
+      });
+      return;
+    }
+
+    try {
+      const result = await smartTaskCreator.parseNaturalLanguageRequest(description);
+      
+      await respond({
+        text: `✅ Created ${result.tasks.length} task(s)`,
+        blocks: result.tasks.map(task => ({
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*${task.title}*\nCategory: ${task.category} | Priority: ${task.priority}\nDue: ${new Date(task.dueDate).toLocaleDateString()}`
+          }
+        })),
+        response_type: 'in_channel'
+      });
+    } catch (error) {
+      await respond({
+        text: '❌ Failed to create task. Please provide more details.',
+        response_type: 'ephemeral'
+      });
+    }
+  }
+
+  async handleGapsCommand(respond) {
+    const gaps = taskManager.identifyGaps();
+    
+    if (gaps.length === 0) {
+      await respond({
+        text: '✅ No critical gaps identified in the current plan.',
+        response_type: 'in_channel'
+      });
+      return;
+    }
+
+    const gapBlocks = gaps.slice(0, 5).map(gap => ({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `${gap.severity === 'critical' ? '🚨' : '⚠️'} *${gap.type.replace('_', ' ').toUpperCase()}*\n${gap.description}\n_Suggested: ${gap.suggestedAction}_`
+      }
+    }));
+
+    await respond({
+      text: '🔍 Gap Analysis Results',
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: '🔍 Planning Gaps Identified'
+          }
+        },
+        ...gapBlocks
+      ],
+      response_type: 'in_channel'
+    });
+  }
+
+  async handleSummaryCommand(respond) {
+    const summary = taskManager.generateDailySummary();
+    
+    await respond({
+      text: '📊 Daily Summary',
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: `📊 Hackathon Summary - ${summary.daysUntilHackathon} days left`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*Progress:* ${summary.stats.completionRate}% complete (${summary.stats.completed}/${summary.stats.total} tasks)\n*Status:* ${summary.stats.inProgress} in progress, ${summary.stats.overdue} overdue, ${summary.stats.atRisk} at risk`
+          }
+        },
+        ...(summary.overdue.length > 0 ? [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*🚨 Overdue:*\n${summary.overdue.map(t => `• ${t.title} (${t.daysOverdue} days overdue)`).join('\n')}`
+          }
+        }] : []),
+        ...(summary.upcoming.length > 0 ? [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*📅 Upcoming:*\n${summary.upcoming.map(t => `• ${t.title} (due in ${t.dueIn} days)`).join('\n')}`
+          }
+        }] : [])
+      ],
+      response_type: 'in_channel'
+    });
+  }
+
+  async handleHelpCommand(respond) {
+    await respond({
+      text: '🤖 AI Hackathon Assistant Commands',
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: '🤖 AI Hackathon Assistant'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/hackathon tasks [filter]` - List tasks (overdue, upcoming, critical, pending)\n• `/hackathon create [description]` - Create new task from description\n• `/hackathon gaps` - Identify planning gaps\n• `/hackathon summary` - Daily progress summary\n\n*Quick Commands:*\n• `/task [description]` - Quick task creation\n• Mention @assistant for general help\n• React with ✅ to mark tasks complete'
+          }
+        }
+      ],
+      response_type: 'ephemeral'
+    });
+  }
+
+  async handleGeneralQuery(client, channel, query) {
+    try {
+      // Use AI to understand the query and provide helpful response
+      const response = await smartTaskCreator.openai.chat.completions.create({
+        model: smartTaskCreator.model,
+        messages: [
+          {
+            role: 'system',
+            content: `You are an AI hackathon production assistant. The hackathon is on September 24th, 2024. 
+            Current date: ${new Date().toISOString().split('T')[0]}
+            Days remaining: ${taskManager.getDaysUntilHackathon()}
+            
+            Provide helpful, concise responses about hackathon planning, task management, or event production.
+            Be professional but friendly. Keep responses under 200 words.`
+          },
+          {
+            role: 'user',
+            content: query
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 300
+      });
+
+      await client.chat.postMessage({
+        channel: channel,
+        text: `🤖 ${response.choices[0].message.content}`
+      });
+    } catch (error) {
+      logger.error('General query error:', error);
+      await client.chat.postMessage({
+        channel: channel,
+        text: "🤖 I'm here to help with hackathon planning! Try asking about tasks, timelines, or use `/hackathon help` for commands."
+      });
+    }
+  }
+
+  async sendStatusUpdate(client, channel) {
+    const summary = taskManager.generateDailySummary();
+    
+    await client.chat.postMessage({
+      channel: channel,
+      text: `🎯 *Daily Hackathon Update*`,
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: `🎯 AI Hackathon Update - ${summary.daysUntilHackathon} days to go!`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*Progress:* ${summary.stats.completionRate}% complete\n*Tasks:* ${summary.stats.completed} done, ${summary.stats.inProgress} in progress\n*Issues:* ${summary.stats.overdue} overdue, ${summary.stats.atRisk} at risk`
+          }
+        }
+      ]
+    });
+  }
+
+  async sendDailyReminders(channel) {
+    const summary = taskManager.generateDailySummary();
+    
+    // Send reminders if there are overdue or critical items
+    if (summary.overdue.length > 0 || summary.criticalGaps.length > 0) {
+      // Implementation for daily reminders
+      logger.info('Sending daily reminders to Slack');
+    }
+  }
+
+  async start(port = 3001) {
+    if (this.isStarted) {
+      logger.warn('Slack bot already started');
+      return;
+    }
+
+    try {
+      await this.app.start(port);
+      this.isStarted = true;
+      logger.info(`Slack bot started on port ${port}`);
+    } catch (error) {
+      logger.error('Failed to start Slack bot:', error);
+      throw error;
+    }
+  }
+
+  async stop() {
+    if (this.app && this.isStarted) {
+      await this.app.stop();
+      this.isStarted = false;
+      logger.info('Slack bot stopped');
+    }
+  }
+}
+
+module.exports = new SlackBot();
