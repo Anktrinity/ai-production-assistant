@@ -1,4 +1,4 @@
-const { App } = require('@slack/bolt');
+const { App, ExpressReceiver } = require('@slack/bolt');
 const taskManager = require('./taskManager');
 const smartTaskCreator = require('./smartTaskCreator');
 const logger = require('../utils/logger');
@@ -6,15 +6,21 @@ const logger = require('../utils/logger');
 class SlackBot {
   constructor() {
     this.app = null;
+    this.receiver = null;
     this.isConfigured = false;
     this.isStarted = false;
     
     // Only initialize if credentials are available
     if (process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) {
+      // Create receiver for integration with Express
+      this.receiver = new ExpressReceiver({
+        signingSecret: process.env.SLACK_SIGNING_SECRET,
+        endpoints: '/slack/events'
+      });
+
       this.app = new App({
         token: process.env.SLACK_BOT_TOKEN,
-        signingSecret: process.env.SLACK_SIGNING_SECRET,
-        socketMode: false // Use HTTP mode for production
+        receiver: this.receiver
       });
 
       this.setupCommands();
@@ -527,7 +533,11 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     }
   }
 
-  async start(port = 3001) {
+  getExpressReceiver() {
+    return this.receiver ? this.receiver.router : null;
+  }
+
+  async start() {
     if (!this.isConfigured) {
       logger.warn('Cannot start Slack bot - not configured');
       return false;
@@ -539,9 +549,9 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     }
 
     try {
-      await this.app.start(port);
+      // With ExpressReceiver, we don't start a separate server
       this.isStarted = true;
-      logger.info(`Slack bot started on port ${port}`);
+      logger.info('Slack bot ready for Express integration');
       return true;
     } catch (error) {
       logger.error('Failed to start Slack bot:', error);
@@ -550,8 +560,8 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
   }
 
   async stop() {
-    if (this.app && this.isStarted) {
-      await this.app.stop();
+    if (this.isStarted) {
+      // With ExpressReceiver, no separate server to stop
       this.isStarted = false;
       logger.info('Slack bot stopped');
     }

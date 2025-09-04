@@ -70,39 +70,14 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Slack Event Webhooks
-app.post('/slack/events', (req, res) => {
-  // Handle Slack events
-  logger.info('Slack event received:', req.body);
-  
-  // URL verification challenge
-  if (req.body.challenge) {
-    return res.send(req.body.challenge);
+// Integrate Slack bot routes into main Express server
+if (slackBot.isConfigured) {
+  const slackReceiver = slackBot.getExpressReceiver();
+  if (slackReceiver) {
+    app.use(slackReceiver);
+    logger.info('Slack bot integrated into Express server');
   }
-  
-  // Handle actual events
-  res.status(200).send('OK');
-});
-
-// Slack Slash Commands
-app.post('/slack/commands', async (req, res) => {
-  try {
-    const { command, text, user_name, channel_name } = req.body;
-    
-    logger.info('Slack command received:', { command, text, user: user_name });
-    
-    // Route to appropriate handler based on command
-    if (command === '/hackathon' || command === '/task') {
-      // This will be handled by the Slack bot service
-      res.status(200).json({ text: 'Processing your request...' });
-    } else {
-      res.status(200).json({ text: 'Unknown command' });
-    }
-  } catch (error) {
-    logger.error('Slack command error:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+}
 
 // Chat with AI Assistant
 app.post('/chat', async (req, res) => {
@@ -390,9 +365,9 @@ io.on('connection', (socket) => {
   });
 });
 
-// Start Slack bot if configured
-slackBot.start(3001).catch(error => {
-  logger.error('Failed to start Slack bot:', error);
+// Initialize Slack bot if configured
+slackBot.start().catch(error => {
+  logger.error('Failed to initialize Slack bot:', error);
 });
 
 // Error handling
