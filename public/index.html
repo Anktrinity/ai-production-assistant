@@ -475,7 +475,7 @@
         <!-- Always Visible Timeline -->
         <div class="card" style="margin: 20px 0;">
             <h3>📅 Visual Timeline</h3>
-            <div id="timeline-chart-main" style="margin-bottom: 20px;"></div>
+            <div id="timeline-chart-main" class="timeline-chart" style="margin-bottom: 20px;">Loading visual timeline...</div>
             <div id="timeline-content-main">Loading timeline...</div>
         </div>
 
@@ -563,6 +563,11 @@
                 if (data.success) {
                     allTasks = data.tasks;
                     displayTasks(filterTasksByType(currentFilter));
+                    
+                    // Update always-visible timeline
+                    if (allTasks && allTasks.length > 0) {
+                        createTimelineMain(allTasks);
+                    }
                 }
             } catch (error) {
                 console.error('Failed to load tasks:', error);
@@ -906,6 +911,102 @@
             chartContainer.appendChild(hackathonMarker);
         }
 
+        function createTimelineMain(tasks) {
+            const chartContainer = document.getElementById('timeline-chart-main');
+            const today = new Date();
+            const hackathonDate = new Date('2025-09-24');
+            const totalDays = Math.ceil((hackathonDate - today) / (1000 * 60 * 60 * 24));
+            
+            chartContainer.innerHTML = '';
+            
+            // Create timeline axis
+            const axis = document.createElement('div');
+            axis.className = 'timeline-axis';
+            chartContainer.appendChild(axis);
+            
+            // Add today marker
+            const todayMarker = document.createElement('div');
+            todayMarker.className = 'timeline-today';
+            todayMarker.style.left = '20px';
+            chartContainer.appendChild(todayMarker);
+            
+            // Add date markers
+            const dateMarkers = [0, 7, 14, 21]; // Days from today
+            dateMarkers.forEach(days => {
+                const markerDate = new Date(today);
+                markerDate.setDate(markerDate.getDate() + days);
+                
+                const marker = document.createElement('div');
+                marker.className = 'timeline-date';
+                marker.textContent = markerDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                marker.style.left = `${20 + (days / totalDays) * (chartContainer.clientWidth - 40)}px`;
+                chartContainer.appendChild(marker);
+            });
+            
+            // Plot tasks
+            tasks.filter(task => task.dueDate).forEach((task, index) => {
+                const dueDate = new Date(task.dueDate);
+                const daysFromToday = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                
+                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
+                    const taskElement = document.createElement('div');
+                    taskElement.className = `timeline-task ${task.priority}`;
+                    taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
+                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nPriority: ${task.priority}`;
+                    
+                    const leftPosition = Math.max(20, 20 + (daysFromToday / totalDays) * (chartContainer.clientWidth - 40));
+                    taskElement.style.left = `${leftPosition}px`;
+                    taskElement.style.bottom = `${80 + (index % 5) * 35}px`;
+                    
+                    chartContainer.appendChild(taskElement);
+                }
+            });
+            
+            // Add hackathon date marker
+            const hackathonMarker = document.createElement('div');
+            hackathonMarker.className = 'timeline-date';
+            hackathonMarker.textContent = 'HACKATHON!';
+            hackathonMarker.style.left = `${chartContainer.clientWidth - 60}px`;
+            hackathonMarker.style.color = '#f56565';
+            hackathonMarker.style.fontWeight = 'bold';
+            chartContainer.appendChild(hackathonMarker);
+
+            // Update content section
+            const contentContainer = document.getElementById('timeline-content-main');
+            const overdueTasks = tasks.filter(t => t.isOverdue);
+            const upcomingTasks = tasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0);
+            
+            contentContainer.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h4>📊 Current Status</h4>
+                    <p><strong>Days until hackathon:</strong> ${totalDays}</p>
+                    <p><strong>Total tasks:</strong> ${tasks.length}</p>
+                </div>
+                
+                ${overdueTasks.length > 0 ? `
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #f56565;">🚨 Overdue Items</h4>
+                        ${overdueTasks.slice(0, 3).map(task => `
+                            <div style="margin: 5px 0; padding: 8px; background: #fed7d7; border-radius: 4px;">
+                                ${task.title} (${Math.abs(task.daysUntilDue)} days overdue)
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                
+                ${upcomingTasks.length > 0 ? `
+                    <div>
+                        <h4 style="color: #ed8936;">📅 Coming Up</h4>
+                        ${upcomingTasks.slice(0, 3).map(task => `
+                            <div style="margin: 5px 0; padding: 8px; background: #fef5e7; border-radius: 4px;">
+                                ${task.title} (due in ${task.daysUntilDue} days)
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `;
+        }
+
         // AI Chat Function
         async function askAI() {
             const query = document.getElementById('aiQuery').value.trim();
@@ -947,9 +1048,9 @@
             }
             
             // Load timeline for always-visible section
-            loadTasks().then(tasks => {
-                if (tasks) {
-                    renderTimeline(tasks, 'timeline-chart-main');
+            loadTasks().then(() => {
+                if (allTasks && allTasks.length > 0) {
+                    createTimelineMain(allTasks);
                 }
             });
         });
