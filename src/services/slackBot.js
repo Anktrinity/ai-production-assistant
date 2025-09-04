@@ -414,7 +414,7 @@ class SlackBot {
           type: 'section',
           text: {
             type: 'mrkdwn',
-text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/hackathon tasks [filter]` - List tasks (overdue, upcoming, critical, pending)\n• `/hackathon create [description]` - Create new task from description\n• `/hackathon claim [task ID]` - Assign task to yourself\n• `/hackathon gaps` - Identify planning gaps\n• `/hackathon summary` - Daily progress summary\n\n*Quick Commands:*\n• `/task [description]` - Quick task creation\n• Mention @assistant for general help\n• React with ✅ to mark tasks complete'
+text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/hackathon tasks [filter]` - List tasks (overdue, upcoming, critical, pending)\n• `/hackathon create [description]` - Create new task from description\n• `/hackathon claim [task ID]` - Assign task to yourself\n• `/hackathon gaps` - Identify planning gaps\n• `/hackathon summary` - Daily progress summary\n\n*Quick Commands:*\n• `/task [description]` - Quick task creation\n• Mention @AI Production Assistant for general help\n• React with ✅ to mark tasks complete'
           }
         }
       ],
