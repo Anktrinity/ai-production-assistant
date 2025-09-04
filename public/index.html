@@ -447,6 +447,17 @@
                     </div>
                     <div id="aiResponse" style="min-height: 50px; padding: 15px; background: white; border-radius: 5px; border: 1px solid #eee; display: none;"></div>
                 </div>
+                
+                <div style="margin-bottom: 20px; padding: 15px; background: #e8f4fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+                    <h4>👤 Quick Task Assignment</h4>
+                    <p style="margin-bottom: 10px;">Enter your name to assign tasks to yourself:</p>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="userName" placeholder="Enter your name (e.g. Jenn)" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <button onclick="setUserName()" style="padding: 10px 15px; background: #2196f3; color: white; border: none; border-radius: 5px; cursor: pointer;">Set Name</button>
+                    </div>
+                    <div id="currentUser" style="margin-top: 10px; font-weight: bold; color: #2196f3;"></div>
+                </div>
+                
                 <div class="slack-info">
                     <h4>🤖 Slack Integration Commands</h4>
                     <p>Your AI assistant is available in Slack! Use these commands to manage your hackathon:</p>
@@ -639,6 +650,9 @@
                     new Date(task.dueDate).toLocaleDateString() : 
                     'No due date';
                 
+                const assignButton = !task.assignee ? 
+                    `<button onclick="assignTaskToMe('${task.id}')" style="margin-left: 10px; padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">📌 Assign to Me</button>` : '';
+                
                 return `
                     <div class="task-item ${urgencyClass} ${priorityClass}">
                         <div class="task-info">
@@ -648,8 +662,11 @@
                                 ${task.isOverdue ? ' • OVERDUE' : ''}
                             </div>
                         </div>
-                        <div class="task-status ${statusClass}">
-                            ${task.status.replace('_', ' ')}
+                        <div style="display: flex; align-items: center;">
+                            <div class="task-status ${statusClass}">
+                                ${task.status.replace('_', ' ')}
+                            </div>
+                            ${assignButton}
                         </div>
                     </div>
                 `;
@@ -1035,8 +1052,73 @@
                 responseDiv.innerHTML = '<div style="color: #f56565;">❌ Failed to get AI response. Please try again.</div>';
             }
         }
+
+        // Task Assignment Functions
+        let currentUserName = localStorage.getItem('hackathonUserName') || '';
+
+        function setUserName() {
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            currentUserName = name;
+            localStorage.setItem('hackathonUserName', name);
+            updateCurrentUserDisplay();
+            nameInput.value = '';
+        }
+
+        function updateCurrentUserDisplay() {
+            const currentUserDiv = document.getElementById('currentUser');
+            if (currentUserName) {
+                currentUserDiv.innerHTML = `✅ Signed in as: <strong>${currentUserName}</strong>`;
+                currentUserDiv.style.display = 'block';
+            } else {
+                currentUserDiv.style.display = 'none';
+            }
+        }
+
+        async function assignTaskToMe(taskId) {
+            if (!currentUserName) {
+                alert('Please set your name first using the "Quick Task Assignment" section above');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/tasks/${taskId}`, {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        assignee: currentUserName,
+                        status: 'in_progress'
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Refresh tasks to show the assignment
+                    loadTasks();
+                    
+                    // Show success message
+                    const notification = document.createElement('div');
+                    notification.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #4caf50; color: white; padding: 15px; border-radius: 8px; z-index: 1000; font-weight: bold;';
+                    notification.innerHTML = `✅ Task assigned to ${currentUserName}!`;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => notification.remove(), 3000);
+                } else {
+                    throw new Error(data.error || 'Failed to assign task');
+                }
+            } catch (error) {
+                alert('Failed to assign task: ' + error.message);
+            }
+        }
         
-        // Enable Enter key for AI chat
+        // Enable Enter key for AI chat and initialize user display
         document.addEventListener('DOMContentLoaded', function() {
             const aiQuery = document.getElementById('aiQuery');
             if (aiQuery) {
@@ -1046,6 +1128,18 @@
                     }
                 });
             }
+
+            const userName = document.getElementById('userName');
+            if (userName) {
+                userName.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        setUserName();
+                    }
+                });
+            }
+            
+            // Initialize user display
+            updateCurrentUserDisplay();
             
             // Load timeline for always-visible section
             loadTasks().then(() => {

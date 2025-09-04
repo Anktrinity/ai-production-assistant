@@ -188,6 +188,16 @@ app.put('/api/tasks/:id', (req, res) => {
   }
 });
 
+app.patch('/api/tasks/:id', (req, res) => {
+  try {
+    const task = taskManager.updateTask(req.params.id, req.body);
+    res.json({ success: true, task: task.toJSON() });
+  } catch (error) {
+    logger.error('Failed to update task:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.delete('/api/tasks/:id', (req, res) => {
   try {
     const task = taskManager.deleteTask(req.params.id);

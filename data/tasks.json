@@ -135,7 +135,7 @@
     "description": "Integrate VCS platform with Luma registration system",
     "status": "pending",
     "priority": "critical",
-    "assignee": null,
+    "assignee": "Dev Team",
     "dueDate": "2025-09-03T15:00:00.000Z",
     "category": "tech",
     "dependencies": [
@@ -163,7 +163,7 @@
     "description": "Configure Chatbase Bot functionality within the VCS platform",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Jenn",
     "dueDate": "2025-09-06T15:00:00.000Z",
     "category": "tech",
     "dependencies": [
@@ -219,7 +219,7 @@
     "description": "Create comprehensive graphics package for live streaming",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Design Team",
     "dueDate": "2025-09-12T15:00:00.000Z",
     "category": "content",
     "dependencies": [],
