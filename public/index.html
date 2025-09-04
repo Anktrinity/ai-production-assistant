@@ -236,6 +236,13 @@
         .btn-secondary {
             background: #e2e8f0;
             color: #4a5568;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary.active-filter {
+            background: #5a67d8 !important;
+            color: white !important;
+            font-weight: bold;
         }
 
         .alert {
@@ -497,10 +504,10 @@
                     <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-                    <button class="btn-secondary" onclick="filterTasks('all')">All</button>
-                    <button class="btn-secondary" onclick="filterTasks('overdue')">Overdue</button>
-                    <button class="btn-secondary" onclick="filterTasks('upcoming')">Upcoming</button>
-                    <button class="btn-secondary" onclick="filterTasks('critical')">Critical</button>
+                    <button id="filter-all" class="btn-secondary active-filter" onclick="filterTasks('all')">All <span id="count-all">(0)</span></button>
+                    <button id="filter-overdue" class="btn-secondary" onclick="filterTasks('overdue')">Overdue <span id="count-overdue">(0)</span></button>
+                    <button id="filter-upcoming" class="btn-secondary" onclick="filterTasks('upcoming')">Upcoming <span id="count-upcoming">(0)</span></button>
+                    <button id="filter-critical" class="btn-secondary" onclick="filterTasks('critical')">Critical <span id="count-critical">(0)</span></button>
                 </div>
                 <div class="task-list" id="task-list">
                     <p>Loading tasks...</p>
@@ -573,7 +580,20 @@
                 
                 if (data.success) {
                     allTasks = data.tasks;
-                    displayTasks(filterTasksByType(currentFilter));
+                    
+                    // Update filter counts
+                    updateFilterCounts();
+                    
+                    // Display current filter
+                    const filteredTasks = filterTasksByType(currentFilter);
+                    displayTasks(filteredTasks);
+                    
+                    // Update task list header
+                    const filterName = currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1);
+                    const taskListHeader = document.querySelector('.card h3');
+                    if (taskListHeader && taskListHeader.textContent.includes('Task Overview')) {
+                        taskListHeader.textContent = `📋 Task Overview - ${filterName} (${filteredTasks.length})`;
+                    }
                     
                     // Update always-visible timeline
                     if (allTasks && allTasks.length > 0) {
@@ -620,17 +640,33 @@
             }
         }
 
+        function updateFilterCounts() {
+            const allCount = allTasks.length;
+            const overdueCount = allTasks.filter(t => t.isOverdue).length;
+            const upcomingCount = allTasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0).length;
+            const criticalCount = allTasks.filter(t => t.isOnCriticalPath || t.priority === 'critical').length;
+            
+            document.getElementById('count-all').textContent = `(${allCount})`;
+            document.getElementById('count-overdue').textContent = `(${overdueCount})`;
+            document.getElementById('count-upcoming').textContent = `(${upcomingCount})`;
+            document.getElementById('count-critical').textContent = `(${criticalCount})`;
+        }
+
         function filterTasks(type) {
             currentFilter = type;
-            displayTasks(filterTasksByType(type));
+            const filteredTasks = filterTasksByType(type);
+            displayTasks(filteredTasks);
             
             // Update button styles
             document.querySelectorAll('.btn-secondary').forEach(btn => {
-                btn.style.background = '#e2e8f0';
-                btn.style.color = '#4a5568';
+                btn.classList.remove('active-filter');
             });
-            event.target.style.background = '#5a67d8';
-            event.target.style.color = 'white';
+            document.getElementById(`filter-${type}`).classList.add('active-filter');
+            
+            // Update task list header
+            const taskListContainer = document.querySelector('.card h3');
+            const filterName = type.charAt(0).toUpperCase() + type.slice(1);
+            taskListContainer.textContent = `📋 Task Overview - ${filterName} (${filteredTasks.length})`;
         }
 
         function displayTasks(tasks) {
