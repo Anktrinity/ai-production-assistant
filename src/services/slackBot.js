@@ -51,6 +51,10 @@ class SlackBot {
           case 'complete':
             await this.handleCompleteCommand(args.slice(1), respond);
             break;
+          case 'claim':
+          case 'take':
+            await this.handleClaimCommand(args.slice(1), command, respond);
+            break;
           case 'gaps':
             await this.handleGapsCommand(respond);
             break;
@@ -260,7 +264,7 @@ class SlackBot {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `${emoji} *${task.title}*\n_${task.category}_ | ${dueText} | ${task.status}\n${task.description.substring(0, 100)}${task.description.length > 100 ? '...' : ''}`
+          text: `${emoji} *${task.title}*\n_${task.category}_ | ${dueText} | ${task.status}\n${task.description.substring(0, 80)}${task.description.length > 80 ? '...' : ''}\n\`ID: ${task.id.split('_').pop()}\` ${task.assignee ? `| Assigned: ${task.assignee}` : '| 🆓 Available'}`
         },
         accessory: {
           type: 'button',
@@ -410,12 +414,45 @@ class SlackBot {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/hackathon tasks [filter]` - List tasks (overdue, upcoming, critical, pending)\n• `/hackathon create [description]` - Create new task from description\n• `/hackathon gaps` - Identify planning gaps\n• `/hackathon summary` - Daily progress summary\n\n*Quick Commands:*\n• `/task [description]` - Quick task creation\n• Mention @assistant for general help\n• React with ✅ to mark tasks complete'
+text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/hackathon tasks [filter]` - List tasks (overdue, upcoming, critical, pending)\n• `/hackathon create [description]` - Create new task from description\n• `/hackathon claim [task ID]` - Assign task to yourself\n• `/hackathon gaps` - Identify planning gaps\n• `/hackathon summary` - Daily progress summary\n\n*Quick Commands:*\n• `/task [description]` - Quick task creation\n• Mention @assistant for general help\n• React with ✅ to mark tasks complete'
           }
         }
       ],
       response_type: 'ephemeral'
     });
+  }
+
+  async handleClaimCommand(args, command, respond) {
+    const taskId = args[0];
+    if (!taskId) {
+      await respond({
+        text: 'Usage: `/hackathon claim [task ID]` or `/hackathon take [task ID]`',
+        response_type: 'ephemeral'
+      });
+      return;
+    }
+
+    try {
+      const userName = command.user_name || 'Unknown User';
+      const task = taskManager.updateTask(taskId, { assignee: userName, status: 'in_progress' });
+      
+      await respond({
+        text: `✅ You've been assigned to: *${task.title}*`,
+        blocks: [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🎯 *Task Claimed!*\n*${task.title}*\nAssigned to: ${userName}\nDue: ${new Date(task.dueDate).toLocaleDateString()}\nPriority: ${task.priority}`
+          }
+        }],
+        response_type: 'in_channel'
+      });
+    } catch (error) {
+      await respond({
+        text: '❌ Task not found or could not be assigned. Use `/hackathon tasks` to see available task IDs.',
+        response_type: 'ephemeral'
+      });
+    }
   }
 
   async handleGeneralQuery(client, channel, query) {

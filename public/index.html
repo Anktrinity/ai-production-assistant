@@ -432,14 +432,23 @@
         </div>
 
         <div class="tabs">
-            <button class="tab active" onclick="showTab('slack')">Slack Integration</button>
+            <button class="tab active" onclick="showTab('slack')">Slack Integration Commands</button>
             <button class="tab" onclick="showTab('timeline')">Timeline</button>
         </div>
 
         <div class="tab-content">
             <div id="slack-tab">
+                <div class="ai-chat-section" style="margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                    <h4>🤖 Ask AI Assistant</h4>
+                    <p>Ask about unfinished tasks, project status, recommendations, or anything else!</p>
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="aiQuery" placeholder="What tasks are still unfinished? What should we focus on next?" style="width: calc(100% - 120px); padding: 12px; border: 1px solid #ddd; border-radius: 5px; margin-right: 10px;">
+                        <button onclick="askAI()" style="padding: 12px 20px; background: #4285f4; color: white; border: none; border-radius: 5px; cursor: pointer;">Ask AI</button>
+                    </div>
+                    <div id="aiResponse" style="min-height: 50px; padding: 15px; background: white; border-radius: 5px; border: 1px solid #eee; display: none;"></div>
+                </div>
                 <div class="slack-info">
-                    <h4>🤖 Slack Bot Integration</h4>
+                    <h4>🤖 Slack Integration Commands</h4>
                     <p>Your AI assistant is available in Slack! Use these commands to manage your hackathon:</p>
                     <div class="slack-commands">
                         <div class="slack-command">/hackathon status</div>
@@ -461,6 +470,13 @@
                 <div id="timeline-chart" style="margin-bottom: 20px;"></div>
                 <div id="timeline-content">Loading timeline...</div>
             </div>
+        </div>
+
+        <!-- Always Visible Timeline -->
+        <div class="card" style="margin: 20px 0;">
+            <h3>📅 Visual Timeline - Always Visible</h3>
+            <div id="timeline-chart-main" style="margin-bottom: 20px;"></div>
+            <div id="timeline-content-main">Loading timeline...</div>
         </div>
 
         <div class="dashboard">
@@ -889,6 +905,54 @@
             hackathonMarker.style.fontWeight = 'bold';
             chartContainer.appendChild(hackathonMarker);
         }
+
+        // AI Chat Function
+        async function askAI() {
+            const query = document.getElementById('aiQuery').value.trim();
+            const responseDiv = document.getElementById('aiResponse');
+            
+            if (!query) return;
+            
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '<div style="color: #666;">🤖 Thinking...</div>';
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ message: query })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    responseDiv.innerHTML = `<strong>🤖 AI Assistant:</strong><br>${data.response.replace(/\n/g, '<br>')}`;
+                } else {
+                    responseDiv.innerHTML = '<div style="color: #f56565;">❌ Error: ' + data.error + '</div>';
+                }
+            } catch (error) {
+                responseDiv.innerHTML = '<div style="color: #f56565;">❌ Failed to get AI response. Please try again.</div>';
+            }
+        }
+        
+        // Enable Enter key for AI chat
+        document.addEventListener('DOMContentLoaded', function() {
+            const aiQuery = document.getElementById('aiQuery');
+            if (aiQuery) {
+                aiQuery.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        askAI();
+                    }
+                });
+            }
+            
+            // Load timeline for always-visible section
+            loadTasks().then(tasks => {
+                if (tasks) {
+                    renderTimeline(tasks, 'timeline-chart-main');
+                }
+            });
+        });
 
         // Auto-refresh dashboard every 30 seconds
         setInterval(loadDashboardData, 30000);

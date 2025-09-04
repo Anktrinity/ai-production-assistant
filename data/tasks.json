@@ -296,33 +296,6 @@
     "urgencyLevel": "high"
   },
   {
-    "id": "task_1757024602338_gmb1znmo5",
-    "title": "Final venue walkthrough",
-    "description": "Conduct a final walkthrough of the venue to ensure everything is in order and ready for the hackathon.",
-    "status": "pending",
-    "priority": "critical",
-    "assignee": null,
-    "dueDate": "2024-09-20",
-    "category": "venue",
-    "dependencies": [
-      "Get a Headcount of all Sponsors for Booths in VCS"
-    ],
-    "estimatedHours": 2,
-    "tags": [
-      "venue",
-      "preparation"
-    ],
-    "createdAt": "2025-09-04T22:23:22.338Z",
-    "updatedAt": "2025-09-04T22:23:22.338Z",
-    "completedAt": null,
-    "notes": [],
-    "isOnCriticalPath": true,
-    "isOverdue": true,
-    "daysUntilDue": -349,
-    "isAtRisk": true,
-    "urgencyLevel": "overdue"
-  },
-  {
     "id": "task_1757024731920_mbwf85f50",
     "title": "Set up Resource Center in VCS",
     "description": "Create and organize a Resource Center within the Virtual Conference System (VCS) to provide attendees with necessary information and materials.",
@@ -348,5 +321,39 @@
     "daysUntilDue": 13,
     "isAtRisk": false,
     "urgencyLevel": "medium"
+  },
+  {
+    "id": "task_1757026300471_txgd6y6j4",
+    "title": "Technical Rehearsal for Hackathon",
+    "description": "All hands on deck final tech run-through before the hackathon. This includes testing all tech integrations, graphics, and the virtual event platform VCS. Ensure all systems are functioning properly.",
+    "status": "pending",
+    "priority": "critical",
+    "assignee": null,
+    "dueDate": "2025-09-17",
+    "category": "tech",
+    "dependencies": [
+      "Build the virtual event platform VCS",
+      "Connect VCS to Luma registration integration",
+      "Set up Chatbase Bot integration in VCS",
+      "Set up Snapsight integration in VCS",
+      "Design graphics overlay package for LIVE virtual event",
+      "Upload & Build Graphics Scenes in Streamyard",
+      "Set up Resource Center in VCS"
+    ],
+    "estimatedHours": 8,
+    "tags": [
+      "rehearsal",
+      "tech",
+      "all-hands"
+    ],
+    "createdAt": "2025-09-04T22:51:40.471Z",
+    "updatedAt": "2025-09-04T22:51:40.471Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": true,
+    "isOverdue": false,
+    "daysUntilDue": 13,
+    "isAtRisk": false,
+    "urgencyLevel": "critical"
   }
 ]
