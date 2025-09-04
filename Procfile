@@ -1,1 +1,1 @@
-web: node src/simple.js
+web: node src/index.js

@@ -411,8 +411,9 @@ process.on('SIGTERM', async () => {
   });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   logger.info(`AI Hackathon Production Assistant running on port ${PORT}`);
+  logger.info(`Server accessible at: http://localhost:${PORT}`);
   logger.info(`Environment: ${process.env.NODE_ENV}`);
   logger.info(`Days until hackathon: ${taskManager.getDaysUntilHackathon()}`);
   
