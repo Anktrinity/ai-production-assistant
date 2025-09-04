@@ -28,7 +28,28 @@ app.use(logger.requestMiddleware);
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/../public/index.html');
+  try {
+    res.sendFile(__dirname + '/../public/index.html');
+  } catch (error) {
+    res.json({ 
+      status: 'error',
+      message: 'File not found',
+      path: __dirname + '/../public/index.html',
+      error: error.message 
+    });
+  }
+});
+
+// Debug endpoint
+app.get('/debug', (req, res) => {
+  res.json({
+    status: 'App is running!',
+    environment: process.env.NODE_ENV,
+    port: process.env.PORT,
+    timestamp: new Date().toISOString(),
+    cwd: process.cwd(),
+    dirname: __dirname
+  });
 });
 
 // Health Check Endpoint
