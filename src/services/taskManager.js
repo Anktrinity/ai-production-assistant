@@ -9,8 +9,7 @@ class TaskManager {
     this.dataFile = path.join(__dirname, '../../data/tasks.json');
     this.hackathonDate = new Date('2025-09-24T09:00:00'); // September 24th, 2025
     this.categories = [
-      'venue', 'catering', 'tech', 'marketing', 'sponsors',
-      'registration', 'logistics', 'judging', 'prizes', 'content'
+      'tech', 'marketing', 'sponsors', 'content'
     ];
     this.loadTasks();
     this.initializeDefaultTasks();

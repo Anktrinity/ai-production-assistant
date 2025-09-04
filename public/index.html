@@ -317,6 +317,78 @@
             font-family: monospace;
             border-left: 3px solid #0284c7;
         }
+
+        .timeline-chart {
+            position: relative;
+            height: 300px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow-x: auto;
+            padding: 20px;
+        }
+
+        .timeline-axis {
+            position: absolute;
+            bottom: 40px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #cbd5e0;
+        }
+
+        .timeline-task {
+            position: absolute;
+            background: #667eea;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-task:hover {
+            transform: translateY(-5px);
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .timeline-task.critical { background: #f56565; }
+        .timeline-task.high { background: #ed8936; }
+        .timeline-task.medium { background: #4299e1; }
+        .timeline-task.low { background: #48bb78; }
+
+        .timeline-date {
+            position: absolute;
+            bottom: 10px;
+            font-size: 10px;
+            color: #666;
+            transform: translateX(-50%);
+        }
+
+        .timeline-today {
+            position: absolute;
+            bottom: 30px;
+            width: 2px;
+            height: 200px;
+            background: #f56565;
+            z-index: 5;
+        }
+
+        .timeline-today::before {
+            content: 'TODAY';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            background: #f56565;
+            color: white;
+            padding: 2px 6px;
+            font-size: 10px;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -325,6 +397,19 @@
             <h1>🎯 AI Hackathon Production Assistant</h1>
             <div class="countdown" id="countdown">Loading...</div>
             <p>Intelligent task management and timeline monitoring for September 24th</p>
+        </div>
+
+        <div class="input-section">
+            <h3>🚀 Smart Task Creation</h3>
+            <div class="input-group">
+                <label for="task-input">Describe what needs to be done</label>
+                <textarea id="task-input" rows="3" placeholder="e.g., 'Set up virtual event platform, integrate chatbots, create promotional graphics'"></textarea>
+            </div>
+            <button class="btn" onclick="createTasks()">
+                <span id="create-btn-text">Create Tasks with AI</span>
+                <span id="create-loading" class="loading" style="display: none;"></span>
+            </button>
+            <div id="task-result" style="display: none; margin-top: 15px;"></div>
         </div>
 
         <div class="main-stats">
@@ -343,6 +428,38 @@
             <div class="stat-card">
                 <div class="stat-number days" id="days-left">0</div>
                 <div>Days Until Hackathon</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('slack')">Slack Integration</button>
+            <button class="tab" onclick="showTab('timeline')">Timeline</button>
+        </div>
+
+        <div class="tab-content">
+            <div id="slack-tab">
+                <div class="slack-info">
+                    <h4>🤖 Slack Bot Integration</h4>
+                    <p>Your AI assistant is available in Slack! Use these commands to manage your hackathon:</p>
+                    <div class="slack-commands">
+                        <div class="slack-command">/hackathon status</div>
+                        <div class="slack-command">/hackathon tasks overdue</div>
+                        <div class="slack-command">/hackathon create [task]</div>
+                        <div class="slack-command">/hackathon gaps</div>
+                        <div class="slack-command">/hackathon summary</div>
+                        <div class="slack-command">/task [description]</div>
+                    </div>
+                    <p style="margin-top: 10px;">💡 <strong>Pro tip:</strong> Mention @assistant in any channel for general hackathon planning help!</p>
+                </div>
+                
+                <h4>Bot Status</h4>
+                <div id="slack-status">Checking Slack bot connection...</div>
+            </div>
+
+            <div id="timeline-tab" style="display: none;">
+                <h3>📅 Visual Timeline</h3>
+                <div id="timeline-chart" style="margin-bottom: 20px;"></div>
+                <div id="timeline-content">Loading timeline...</div>
             </div>
         </div>
 
@@ -371,51 +488,6 @@
                     <p>Analyzing gaps...</p>
                 </div>
                 <button class="btn" onclick="refreshGaps()" style="margin-top: 15px;">Refresh Analysis</button>
-            </div>
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('create')">Create Tasks</button>
-            <button class="tab" onclick="showTab('slack')">Slack Integration</button>
-            <button class="tab" onclick="showTab('timeline')">Timeline</button>
-        </div>
-
-        <div class="tab-content">
-            <div id="create-tab">
-                <h3>🚀 Smart Task Creation</h3>
-                <div class="input-group">
-                    <label for="task-input">Describe what needs to be done</label>
-                    <textarea id="task-input" rows="3" placeholder="e.g., 'Book venue for 200 people, arrange catering for lunch and dinner, set up registration system'"></textarea>
-                </div>
-                <button class="btn" onclick="createTasks()">
-                    <span id="create-btn-text">Create Tasks with AI</span>
-                    <span id="create-loading" class="loading" style="display: none;"></span>
-                </button>
-                <div id="task-result" style="display: none; margin-top: 15px;"></div>
-            </div>
-
-            <div id="slack-tab" style="display: none;">
-                <div class="slack-info">
-                    <h4>🤖 Slack Bot Integration</h4>
-                    <p>Your AI assistant is available in Slack! Use these commands to manage your hackathon:</p>
-                    <div class="slack-commands">
-                        <div class="slack-command">/hackathon status</div>
-                        <div class="slack-command">/hackathon tasks overdue</div>
-                        <div class="slack-command">/hackathon create [task]</div>
-                        <div class="slack-command">/hackathon gaps</div>
-                        <div class="slack-command">/hackathon summary</div>
-                        <div class="slack-command">/task [description]</div>
-                    </div>
-                    <p style="margin-top: 10px;">💡 <strong>Pro tip:</strong> Mention @assistant in any channel for general hackathon planning help!</p>
-                </div>
-                
-                <h4>Bot Status</h4>
-                <div id="slack-status">Checking Slack bot connection...</div>
-            </div>
-
-            <div id="timeline-tab" style="display: none;">
-                <h3>📅 Timeline Overview</h3>
-                <div id="timeline-content">Loading timeline...</div>
             </div>
         </div>
     </div>
@@ -671,7 +743,7 @@
             if (tabName === 'slack') {
                 loadSlackStatus();
             } else if (tabName === 'timeline') {
-                loadTimeline();
+                setTimeout(loadTimeline, 100); // Delay to ensure container is visible
             }
         }
 
@@ -700,15 +772,25 @@
         }
 
         async function loadTimeline() {
+            const chartContainer = document.getElementById('timeline-chart');
             const container = document.getElementById('timeline-content');
+            
+            chartContainer.innerHTML = 'Loading visual timeline...';
             container.innerHTML = 'Loading timeline data...';
             
             try {
-                const response = await fetch('/api/summary');
-                const data = await response.json();
+                const [summaryResponse, tasksResponse] = await Promise.all([
+                    fetch('/api/summary'),
+                    fetch('/api/tasks')
+                ]);
                 
-                if (data.success) {
-                    const summary = data.summary;
+                const summaryData = await summaryResponse.json();
+                const tasksData = await tasksResponse.json();
+                
+                if (summaryData.success && tasksData.success) {
+                    createVisualTimeline(tasksData.tasks);
+                    
+                    const summary = summaryData.summary;
                     container.innerHTML = `
                         <div style="margin-bottom: 20px;">
                             <h4>📊 Current Status</h4>
@@ -740,9 +822,72 @@
                     `;
                 }
             } catch (error) {
+                chartContainer.innerHTML = 'Failed to load visual timeline';
                 container.innerHTML = 'Failed to load timeline data';
                 console.error('Timeline load error:', error);
             }
+        }
+
+        function createVisualTimeline(tasks) {
+            const chartContainer = document.getElementById('timeline-chart');
+            const today = new Date();
+            const hackathonDate = new Date('2025-09-24');
+            const totalDays = Math.ceil((hackathonDate - today) / (1000 * 60 * 60 * 24));
+            
+            chartContainer.innerHTML = '';
+            chartContainer.className = 'timeline-chart';
+            
+            // Create timeline axis
+            const axis = document.createElement('div');
+            axis.className = 'timeline-axis';
+            chartContainer.appendChild(axis);
+            
+            // Add today marker
+            const todayMarker = document.createElement('div');
+            todayMarker.className = 'timeline-today';
+            todayMarker.style.left = '20px';
+            chartContainer.appendChild(todayMarker);
+            
+            // Add date markers
+            const dateMarkers = [0, 7, 14, 21]; // Days from today
+            dateMarkers.forEach(days => {
+                const markerDate = new Date(today);
+                markerDate.setDate(markerDate.getDate() + days);
+                
+                const marker = document.createElement('div');
+                marker.className = 'timeline-date';
+                marker.textContent = markerDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                marker.style.left = `${20 + (days / totalDays) * (chartContainer.clientWidth - 40)}px`;
+                chartContainer.appendChild(marker);
+            });
+            
+            // Plot tasks
+            tasks.filter(task => task.dueDate).forEach((task, index) => {
+                const dueDate = new Date(task.dueDate);
+                const daysFromToday = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                
+                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
+                    const taskElement = document.createElement('div');
+                    taskElement.className = `timeline-task ${task.priority}`;
+                    taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
+                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nPriority: ${task.priority}`;
+                    
+                    const leftPosition = Math.max(20, 20 + (daysFromToday / totalDays) * (chartContainer.clientWidth - 40));
+                    taskElement.style.left = `${leftPosition}px`;
+                    taskElement.style.bottom = `${80 + (index % 5) * 35}px`;
+                    
+                    chartContainer.appendChild(taskElement);
+                }
+            });
+            
+            // Add hackathon date marker
+            const hackathonMarker = document.createElement('div');
+            hackathonMarker.className = 'timeline-date';
+            hackathonMarker.textContent = 'HACKATHON!';
+            hackathonMarker.style.left = `${chartContainer.clientWidth - 60}px`;
+            hackathonMarker.style.color = '#f56565';
+            hackathonMarker.style.fontWeight = 'bold';
+            chartContainer.appendChild(hackathonMarker);
         }
 
         // Auto-refresh dashboard every 30 seconds

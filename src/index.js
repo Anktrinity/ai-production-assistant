@@ -31,6 +31,117 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/../public/index.html');
 });
 
+// Health Check Endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'Running',
+    service: 'AI Production Assistant',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    endpoints: [
+      'GET /health - Health check',
+      'POST /slack/events - Slack event webhooks',
+      'POST /slack/commands - Slack slash commands',
+      'GET /tasks - Get all tasks',
+      'POST /tasks - Create new task',
+      'POST /chat - Chat with AI assistant'
+    ]
+  });
+});
+
+// Slack Event Webhooks
+app.post('/slack/events', (req, res) => {
+  // Handle Slack events
+  logger.info('Slack event received:', req.body);
+  
+  // URL verification challenge
+  if (req.body.challenge) {
+    return res.send(req.body.challenge);
+  }
+  
+  // Handle actual events
+  res.status(200).send('OK');
+});
+
+// Slack Slash Commands
+app.post('/slack/commands', async (req, res) => {
+  try {
+    const { command, text, user_name, channel_name } = req.body;
+    
+    logger.info('Slack command received:', { command, text, user: user_name });
+    
+    // Route to appropriate handler based on command
+    if (command === '/hackathon' || command === '/task') {
+      // This will be handled by the Slack bot service
+      res.status(200).json({ text: 'Processing your request...' });
+    } else {
+      res.status(200).json({ text: 'Unknown command' });
+    }
+  } catch (error) {
+    logger.error('Slack command error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Chat with AI Assistant
+app.post('/chat', async (req, res) => {
+  try {
+    const { message, context } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({ error: 'Message is required' });
+    }
+    
+    // Use the smart task creator for AI responses
+    const response = await smartTaskCreator.openai.chat.completions.create({
+      model: smartTaskCreator.model,
+      messages: [
+        {
+          role: 'system',
+          content: `You are an AI hackathon production assistant. The hackathon is on September 24th, 2025. 
+          Current date: ${new Date().toISOString().split('T')[0]}
+          Days remaining: ${taskManager.getDaysUntilHackathon()}
+          
+          You help with:
+          - Task management and planning
+          - Event production advice  
+          - Timeline management
+          - Virtual event setup guidance
+          
+          Be helpful, concise, and actionable. Keep responses under 200 words.`
+        },
+        {
+          role: 'user',
+          content: message
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 300
+    });
+
+    res.json({
+      success: true,
+      response: response.choices[0].message.content,
+      timestamp: new Date().toISOString()
+    });
+    
+  } catch (error) {
+    logger.error('Chat error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Legacy route aliases for compatibility
+app.get('/tasks', (req, res) => {
+  req.url = '/api/tasks';
+  app._router.handle(req, res);
+});
+
+app.post('/tasks', (req, res) => {
+  req.url = '/api/tasks';
+  app._router.handle(req, res);
+});
+
 // Task Management Routes
 app.get('/api/tasks', (req, res) => {
   try {
