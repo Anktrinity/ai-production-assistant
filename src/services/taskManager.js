@@ -7,7 +7,7 @@ class TaskManager {
   constructor() {
     this.tasks = new Map();
     this.dataFile = path.join(__dirname, '../../data/tasks.json');
-    this.hackathonDate = new Date('2024-09-24T09:00:00'); // September 24th, 2024
+    this.hackathonDate = new Date('2025-09-24T09:00:00'); // September 24th, 2025
     this.categories = [
       'venue', 'catering', 'tech', 'marketing', 'sponsors',
       'registration', 'logistics', 'judging', 'prizes', 'content'
@@ -49,75 +49,7 @@ class TaskManager {
   initializeDefaultTasks() {
     if (this.tasks.size === 0) {
       const defaultTasks = [
-        // Core Infrastructure Tasks
-        {
-          title: 'Venue booking and setup',
-          description: 'Confirm venue availability and complete setup requirements',
-          category: 'venue',
-          priority: 'critical',
-          dueDate: this.getDateBeforeHackathon(30),
-          estimatedHours: 4,
-          isOnCriticalPath: true
-        },
-        {
-          title: 'Catering arrangements',
-          description: 'Arrange meals and refreshments for participants',
-          category: 'catering',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(14),
-          estimatedHours: 6
-        },
-        {
-          title: 'Technical infrastructure',
-          description: 'Set up WiFi, power, AV equipment, and tech support',
-          category: 'tech',
-          priority: 'critical',
-          dueDate: this.getDateBeforeHackathon(7),
-          estimatedHours: 12,
-          isOnCriticalPath: true
-        },
-        {
-          title: 'Sponsor outreach',
-          description: 'Contact potential sponsors and secure funding partnerships',
-          category: 'sponsors',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(45),
-          estimatedHours: 20
-        },
-        {
-          title: 'Registration system',
-          description: 'Set up and test participant registration platform',
-          category: 'registration',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(21),
-          estimatedHours: 8
-        },
-        {
-          title: 'Judge recruitment',
-          description: 'Recruit qualified judges and brief them on criteria',
-          category: 'judging',
-          priority: 'high',
-          dueDate: this.getDateBeforeHackathon(14),
-          estimatedHours: 10
-        },
-        {
-          title: 'Marketing campaigns',
-          description: 'Launch comprehensive social media and PR campaigns',
-          category: 'marketing',
-          priority: 'medium',
-          dueDate: this.getDateBeforeHackathon(35),
-          estimatedHours: 15
-        },
-        {
-          title: 'Prize procurement',
-          description: 'Purchase or arrange prizes and awards for winners',
-          category: 'prizes',
-          priority: 'medium',
-          dueDate: this.getDateBeforeHackathon(10),
-          estimatedHours: 4
-        },
-        
-        // Specific New Tasks
+        // Virtual Event Tasks Only
         {
           title: 'Design promotional graphics for social media',
           description: 'Create engaging visual content for social media marketing campaigns',

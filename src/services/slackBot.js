@@ -426,7 +426,7 @@ class SlackBot {
         messages: [
           {
             role: 'system',
-            content: `You are an AI hackathon production assistant. The hackathon is on September 24th, 2024. 
+            content: `You are an AI hackathon production assistant. The hackathon is on September 24th, 2025. 
             Current date: ${new Date().toISOString().split('T')[0]}
             Days remaining: ${taskManager.getDaysUntilHackathon()}
             

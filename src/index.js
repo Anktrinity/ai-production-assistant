@@ -126,7 +126,7 @@ app.get('/api/status', (req, res) => {
       stats,
       gaps,
       summary,
-      hackathonDate: '2024-09-24',
+      hackathonDate: '2025-09-24',
       daysUntilHackathon: taskManager.getDaysUntilHackathon()
     });
   } catch (error) {
