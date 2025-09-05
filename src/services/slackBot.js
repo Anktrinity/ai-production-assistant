@@ -115,6 +115,50 @@ class SlackBot {
         });
       }
     });
+
+    // Assistant command for general help and queries
+    this.app.command('/assistant', async ({ command, ack, respond }) => {
+      await ack();
+
+      try {
+        const query = command.text.trim();
+        
+        if (!query || query === 'help') {
+          await this.handleHelpCommand(respond);
+          return;
+        }
+
+        // Handle task count queries
+        if (query.toLowerCase().includes('task') && (query.toLowerCase().includes('left') || query.toLowerCase().includes('remaining') || query.toLowerCase().includes('how many'))) {
+          const stats = taskManager.getCompletionStats();
+          const pending = stats.total - stats.completed;
+          await respond({
+            text: `📊 *Task Summary:*\n• Total tasks: ${stats.total}\n• Completed: ${stats.completed}\n• Remaining: ${pending}\n• Overdue: ${stats.overdue}`,
+            response_type: 'in_channel'
+          });
+          return;
+        }
+
+        // Handle status queries
+        if (query.toLowerCase().includes('status') || query.toLowerCase().includes('progress')) {
+          await this.handleStatusCommand(respond);
+          return;
+        }
+
+        // Default help response
+        await respond({
+          text: `🤖 *AI Production Assistant*\nI can help you with:\n• \`/assistant help\` - Show this help\n• \`/hackathon status\` - Project status\n• \`/hackathon tasks\` - View tasks\n• \`/task [description]\` - Create new task\n\nTry asking: "how many tasks left?" or "what's our progress?"`,
+          response_type: 'ephemeral'
+        });
+
+      } catch (error) {
+        logger.error('Assistant command error:', error);
+        await respond({
+          text: '❌ Something went wrong. Please try again.',
+          response_type: 'ephemeral'
+        });
+      }
+    });
   }
 
   setupEvents() {
