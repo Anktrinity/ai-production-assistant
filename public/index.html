@@ -171,8 +171,7 @@
         .priority-medium { border-left: 4px solid #4299e1; }
         .priority-low { border-left: 4px solid #48bb78; }
 
-        .urgency-overdue { background-color: #fed7d7; }
-        .urgency-urgent { background-color: #ffeaa7; }
+        /* Removed urgency background colors - keeping only status box colors */
 
         .input-section {
             background: white;
@@ -707,7 +706,6 @@
             });
 
             container.innerHTML = sortedTasks.map(task => {
-                const urgencyClass = task.urgencyLevel === 'overdue' || task.urgencyLevel === 'urgent' ? `urgency-${task.urgencyLevel}` : '';
                 const priorityClass = `priority-${task.priority}`;
                 const statusClass = `status-${task.status}`;
                 
@@ -719,7 +717,7 @@
                     `<button onclick="assignTaskToMe('${task.id}')" style="margin-left: 10px; padding: 6px 12px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">📌 Assign to Me</button>` : '';
                 
                 return `
-                    <div class="task-item ${urgencyClass} ${priorityClass}">
+                    <div class="task-item ${priorityClass}">
                         <div class="task-info">
                             <div class="task-title">${task.title}</div>
                             <div class="task-meta">
