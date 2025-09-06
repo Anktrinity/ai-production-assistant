@@ -437,6 +437,20 @@ class SlackBot {
             text: `*🚨 Overdue:*\n${summary.overdue.map(t => `• ${t.title} (${t.daysOverdue} days overdue)`).join('\n')}`
           }
         }] : []),
+        ...(summary.pending.length > 0 ? [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*⏳ Pending:*\n${summary.pending.map(t => `• ${t.title} (due in ${t.dueIn} days)`).join('\n')}`
+          }
+        }] : []),
+        ...(summary.inProgress.length > 0 ? [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*🚧 In Progress:*\n${summary.inProgress.map(t => `• ${t.title} (due in ${t.dueIn} days)`).join('\n')}`
+          }
+        }] : []),
         ...(summary.upcoming.length > 0 ? [{
           type: 'section',
           text: {

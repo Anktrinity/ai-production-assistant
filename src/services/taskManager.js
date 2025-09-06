@@ -358,7 +358,9 @@ class TaskManager {
   generateDailySummary() {
     const stats = this.getCompletionStats();
     const overdue = this.getOverdueTasks();
-    const upcoming = this.getUpcomingTasks(3);
+    const upcoming = this.getUpcomingTasks(30); // Show all upcoming tasks within 30 days
+    const pending = this.getTasksByStatus('pending');
+    const inProgress = this.getTasksByStatus('in_progress');
     const gaps = this.identifyGaps();
     const daysLeft = this.getDaysUntilHackathon();
     
@@ -368,6 +370,8 @@ class TaskManager {
       stats,
       overdue: overdue.map(t => ({ id: t.id, title: t.title, daysOverdue: -t.getDaysUntilDue() })),
       upcoming: upcoming.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
+      pending: pending.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
+      inProgress: inProgress.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
       criticalGaps: gaps.filter(g => g.severity === 'critical'),
       recommendations: this.generateRecommendations(stats, gaps, daysLeft)
     };
