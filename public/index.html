@@ -678,24 +678,30 @@
                 return;
             }
             
-            // Sort tasks: 1. Critical priority, 2. Overdue, 3. Upcoming, 4. Completed
+            // Sort tasks: 1. Critical/Overdue, 2. Upcoming/In Progress, 3. Completed (always last)
             const sortedTasks = tasks.sort((a, b) => {
-                // Priority order: critical > high > medium > low
+                // First: Completed tasks always go to the bottom
+                if (a.status === 'completed' && b.status !== 'completed') return 1;
+                if (b.status === 'completed' && a.status !== 'completed') return -1;
+                
+                // For non-completed tasks, sort by priority first
                 const priorityOrder = { 'critical': 4, 'high': 3, 'medium': 2, 'low': 1 };
                 const aPriority = priorityOrder[a.priority] || 0;
                 const bPriority = priorityOrder[b.priority] || 0;
                 
-                // Status order: in_progress/pending > completed
-                const statusOrder = { 'pending': 3, 'in_progress': 2, 'completed': 1, 'blocked': 4 };
+                if (aPriority !== bPriority) {
+                    return bPriority - aPriority; // Critical first
+                }
+                
+                // Then by overdue status
+                if (a.isOverdue && !b.isOverdue) return -1;
+                if (b.isOverdue && !a.isOverdue) return 1;
+                
+                // Then by status (in_progress before pending)
+                const statusOrder = { 'in_progress': 2, 'pending': 1, 'blocked': 3 };
                 const aStatus = statusOrder[a.status] || 0;
                 const bStatus = statusOrder[b.status] || 0;
                 
-                // First sort by priority (critical first)
-                if (aPriority !== bPriority) {
-                    return bPriority - aPriority;
-                }
-                
-                // Then by status (active tasks first)
                 if (aStatus !== bStatus) {
                     return bStatus - aStatus;
                 }
