@@ -364,14 +364,23 @@ class TaskManager {
     const gaps = this.identifyGaps();
     const daysLeft = this.getDaysUntilHackathon();
     
+    // Sort each category by due date (ascending - closest to today first)
+    const sortByDueDate = (tasks) => {
+      return tasks.sort((a, b) => {
+        const aDate = new Date(a.dueDate);
+        const bDate = new Date(b.dueDate);
+        return aDate - bDate;
+      });
+    };
+    
     return {
       date: new Date().toISOString().split('T')[0],
       daysUntilHackathon: daysLeft,
       stats,
-      overdue: overdue.map(t => ({ id: t.id, title: t.title, daysOverdue: -t.getDaysUntilDue() })),
-      upcoming: upcoming.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
-      pending: pending.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
-      inProgress: inProgress.map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
+      overdue: sortByDueDate([...overdue]).map(t => ({ id: t.id, title: t.title, daysOverdue: -t.getDaysUntilDue() })),
+      upcoming: sortByDueDate([...upcoming]).map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
+      pending: sortByDueDate([...pending]).map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
+      inProgress: sortByDueDate([...inProgress]).map(t => ({ id: t.id, title: t.title, dueIn: t.getDaysUntilDue() })),
       criticalGaps: gaps.filter(g => g.severity === 'critical'),
       recommendations: this.generateRecommendations(stats, gaps, daysLeft)
     };
