@@ -676,8 +676,36 @@
                 container.innerHTML = '<p>No tasks found for the current filter.</p>';
                 return;
             }
+            
+            // Sort tasks: 1. Critical priority, 2. Overdue, 3. Upcoming, 4. Completed
+            const sortedTasks = tasks.sort((a, b) => {
+                // Priority order: critical > high > medium > low
+                const priorityOrder = { 'critical': 4, 'high': 3, 'medium': 2, 'low': 1 };
+                const aPriority = priorityOrder[a.priority] || 0;
+                const bPriority = priorityOrder[b.priority] || 0;
+                
+                // Status order: in_progress/pending > completed
+                const statusOrder = { 'pending': 3, 'in_progress': 2, 'completed': 1, 'blocked': 4 };
+                const aStatus = statusOrder[a.status] || 0;
+                const bStatus = statusOrder[b.status] || 0;
+                
+                // First sort by priority (critical first)
+                if (aPriority !== bPriority) {
+                    return bPriority - aPriority;
+                }
+                
+                // Then by status (active tasks first)
+                if (aStatus !== bStatus) {
+                    return bStatus - aStatus;
+                }
+                
+                // Finally by due date (sooner first)
+                const aDueDate = a.dueDate ? new Date(a.dueDate) : new Date('2099-12-31');
+                const bDueDate = b.dueDate ? new Date(b.dueDate) : new Date('2099-12-31');
+                return aDueDate - bDueDate;
+            });
 
-            container.innerHTML = tasks.map(task => {
+            container.innerHTML = sortedTasks.map(task => {
                 const urgencyClass = task.urgencyLevel === 'overdue' || task.urgencyLevel === 'urgent' ? `urgency-${task.urgencyLevel}` : '';
                 const priorityClass = `priority-${task.priority}`;
                 const statusClass = `status-${task.status}`;
