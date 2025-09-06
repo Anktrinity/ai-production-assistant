@@ -697,8 +697,8 @@
                 if (a.isOverdue && !b.isOverdue) return -1;
                 if (b.isOverdue && !a.isOverdue) return 1;
                 
-                // Then by status (in_progress before pending)
-                const statusOrder = { 'in_progress': 2, 'pending': 1, 'blocked': 3 };
+                // Then by status (pending first, then in_progress, then blocked)
+                const statusOrder = { 'pending': 3, 'in_progress': 2, 'blocked': 1 };
                 const aStatus = statusOrder[a.status] || 0;
                 const bStatus = statusOrder[b.status] || 0;
                 
