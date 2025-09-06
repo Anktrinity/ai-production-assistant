@@ -28,7 +28,7 @@
   {
     "id": "task_1756930086696_qyhi1wyof",
     "title": "Finalize event agenda and speaker lineup",
-    "description": "Complete the event schedule and confirm all speakers",
+    "description": "Complete the event schedule and confirm all speakers. 75% complete",
     "status": "in_progress",
     "priority": "critical",
     "assignee": "Sarah Beth, Pete",
@@ -106,7 +106,7 @@
   {
     "id": "task_1756930086696_dgihlzrw7",
     "title": "Build the virtual event platform VCS",
-    "description": "Develop and deploy the Virtual Conference System (VCS) platform",
+    "description": "Develop and deploy the Virtual Conference System (VCS) platform. 55% complete",
     "status": "in_progress",
     "priority": "critical",
     "assignee": "Michelle",
@@ -133,7 +133,7 @@
     "id": "task_1756930086696_po73mexpc",
     "title": "Connect VCS to Luma registration integration",
     "description": "Integrate VCS platform with Luma registration system",
-    "status": "pending",
+    "status": "completed",
     "priority": "critical",
     "assignee": "Dev Team",
     "dueDate": "2025-09-03T15:00:00.000Z",
@@ -160,10 +160,10 @@
   {
     "id": "task_1756930086696_46puaspf1",
     "title": "Set up Chatbase Bot integration in VCS",
-    "description": "Configure Chatbase Bot functionality within the VCS platform",
-    "status": "pending",
+    "description": "Configure Chatbase Bot functionality within the VCS platform. 45% complete",
+    "status": "in_progress",
     "priority": "high",
-    "assignee": "Jenn",
+    "assignee": "Peter & Michelle",
     "dueDate": "2025-09-06T15:00:00.000Z",
     "category": "tech",
     "dependencies": [
@@ -188,10 +188,10 @@
   {
     "id": "task_1756930086696_63q0oaxzw",
     "title": "Set up Snapsight integration in VCS",
-    "description": "Integrate Snapsight functionality into the VCS platform",
-    "status": "pending",
+    "description": "Integrate Snapsight functionality into the VCS platform. 25% complete",
+    "status": "in_progress",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Peter & Jennifer",
     "dueDate": "2025-09-06T15:00:00.000Z",
     "category": "tech",
     "dependencies": [
@@ -216,10 +216,10 @@
   {
     "id": "task_1756930086696_x0pfqky1g",
     "title": "Design graphics overlay package for LIVE virtual event",
-    "description": "Create comprehensive graphics package for live streaming",
-    "status": "pending",
+    "description": "Create comprehensive graphics package for live streaming. 15% complete",
+    "status": "in_progress",
     "priority": "high",
-    "assignee": "Design Team",
+    "assignee": "Arthur & Sara Beth",
     "dueDate": "2025-09-12T15:00:00.000Z",
     "category": "content",
     "dependencies": [],
@@ -242,10 +242,10 @@
   {
     "id": "task_1756930086696_na3e574vf",
     "title": "Upload & Build Graphics Scenes in Streamyard",
-    "description": "Set up all graphic scenes and overlays in Streamyard platform",
-    "status": "pending",
+    "description": "Set up all graphic scenes and overlays in Streamyard platform. 5% complete",
+    "status": "in_progress",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Anca",
     "dueDate": "2025-09-17T15:00:00.000Z",
     "category": "tech",
     "dependencies": [
@@ -270,10 +270,10 @@
   {
     "id": "task_1756930086696_rqbule4zy",
     "title": "Get a Headcount of all Sponsors for Booths in VCS",
-    "description": "Collect sponsor booth requirements and finalize virtual booth allocation",
-    "status": "pending",
+    "description": "Collect sponsor booth requirements and finalize virtual booth allocation. 35% complete",
+    "status": "in_progress",
     "priority": "medium",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-10T15:00:00.000Z",
     "category": "sponsors",
     "dependencies": [
@@ -298,10 +298,10 @@
   {
     "id": "task_1757024731920_mbwf85f50",
     "title": "Set up Resource Center in VCS",
-    "description": "Create and organize a Resource Center within the Virtual Conference System (VCS) to provide attendees with necessary information and materials.",
-    "status": "pending",
+    "description": "Create and organize a Resource Center within the Virtual Conference System (VCS) to provide attendees with necessary information and materials. 75% complete",
+    "status": "in_progress",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Michelle",
     "dueDate": "2025-09-17",
     "category": "tech",
     "dependencies": [
@@ -328,7 +328,7 @@
     "description": "All hands on deck final tech run-through before the hackathon. This includes testing all tech integrations, graphics, and the virtual event platform VCS. Ensure all systems are functioning properly.",
     "status": "pending",
     "priority": "critical",
-    "assignee": null,
+    "assignee": "Anca & Liz",
     "dueDate": "2025-09-17",
     "category": "tech",
     "dependencies": [

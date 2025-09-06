@@ -263,6 +263,21 @@ class TaskManager {
     const blocked = tasks.filter(t => t.status === 'blocked').length;
     const overdue = tasks.filter(t => t.isOverdue()).length;
     const atRisk = tasks.filter(t => t.isAtRisk()).length;
+    
+    // Calculate weighted completion rate based on percentages in descriptions
+    let totalWeightedCompletion = 0;
+    tasks.forEach(task => {
+      if (task.status === 'completed') {
+        totalWeightedCompletion += 100;
+      } else if (task.status === 'in_progress') {
+        // Extract percentage from description
+        const percentMatch = task.description.match(/(\d+)%\s+complete/);
+        const percentage = percentMatch ? parseInt(percentMatch[1]) : 50; // Default 50% if no percentage found
+        totalWeightedCompletion += percentage;
+      }
+      // Pending tasks contribute 0%
+    });
+    const weightedCompletionRate = Math.round(totalWeightedCompletion / total);
 
     return {
       total,
@@ -272,7 +287,7 @@ class TaskManager {
       pending: total - completed - inProgress - blocked,
       overdue,
       atRisk,
-      completionRate: total > 0 ? Math.round((completed / total) * 100) : 0,
+      completionRate: total > 0 ? weightedCompletionRate : 0,
       daysUntilHackathon: this.getDaysUntilHackathon()
     };
   }
