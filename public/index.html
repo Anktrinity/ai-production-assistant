@@ -363,10 +363,11 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .timeline-task.critical { background: #f56565; }
-        .timeline-task.high { background: #ed8936; }
-        .timeline-task.medium { background: #4299e1; }
-        .timeline-task.low { background: #48bb78; }
+        /* Timeline task colors - match task overview status colors */
+        .timeline-task.pending { background: #3b82f6; }
+        .timeline-task.in_progress { background: #fbbf24; }
+        .timeline-task.completed { background: #10b981; }
+        .timeline-task.blocked { background: #ef4444; }
 
         .timeline-date {
             position: absolute;
@@ -969,9 +970,9 @@
                 
                 if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
                     const taskElement = document.createElement('div');
-                    taskElement.className = `timeline-task ${task.priority}`;
+                    taskElement.className = `timeline-task ${task.status}`;
                     taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
-                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nPriority: ${task.priority}`;
+                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nStatus: ${task.status}\nPriority: ${task.priority}`;
                     
                     const leftPosition = Math.max(20, 20 + (daysFromToday / totalDays) * (chartContainer.clientWidth - 40));
                     taskElement.style.left = `${leftPosition}px`;
@@ -1030,9 +1031,9 @@
                 
                 if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
                     const taskElement = document.createElement('div');
-                    taskElement.className = `timeline-task ${task.priority}`;
+                    taskElement.className = `timeline-task ${task.status}`;
                     taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
-                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nPriority: ${task.priority}`;
+                    taskElement.title = `${task.title}\nDue: ${dueDate.toLocaleDateString()}\nStatus: ${task.status}\nPriority: ${task.priority}`;
                     
                     const leftPosition = Math.max(20, 20 + (daysFromToday / totalDays) * (chartContainer.clientWidth - 40));
                     taskElement.style.left = `${leftPosition}px`;
