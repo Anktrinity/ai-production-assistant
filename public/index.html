@@ -160,10 +160,16 @@
             font-weight: bold;
         }
 
-        .status-pending { background: #fef5e7; color: #744210; }
-        .status-in_progress { background: #ebf8ff; color: #2a4365; }
-        .status-completed { background: #f0fff4; color: #22543d; }
-        .status-blocked { background: #fed7d7; color: #822727; }
+        .status-pending { background: #dbeafe; color: #1e40af; }
+        .status-in_progress { background: #fef3c7; color: #92400e; }
+        .status-completed { background: #d1fae5; color: #065f46; }
+        .status-blocked { background: #fecaca; color: #991b1b; }
+        
+        /* Priority-based coloring */
+        .priority-critical .task-status { background: #fecaca !important; color: #991b1b !important; }
+        .priority-high .task-status { background: #fed7ab !important; color: #9a3412 !important; }
+        .priority-medium .task-status { background: #dbeafe !important; color: #1e40af !important; }
+        .priority-low .task-status { background: #d1fae5 !important; color: #065f46 !important; }
 
         .priority-critical { border-left: 4px solid #f56565; }
         .priority-high { border-left: 4px solid #ed8936; }
