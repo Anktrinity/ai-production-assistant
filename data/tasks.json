@@ -414,7 +414,7 @@
     "description": "Plan and schedule a live Q&A session for the hackathon participants. This includes setting up the platform, preparing the questions, and informing the participants.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-09",
     "category": "content",
     "dependencies": [
@@ -428,7 +428,7 @@
       "content"
     ],
     "createdAt": "2025-09-07T21:40:31.068Z",
-    "updatedAt": "2025-09-07T21:40:31.068Z",
+    "updatedAt": "2025-09-07T21:49:17.540Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -443,7 +443,7 @@
     "description": "Create a carousel for marketing purposes showcasing the top 5 reasons to attend the hackathon. This will be used for promotional purposes on various platforms.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "marketing",
     "dependencies": [
@@ -456,7 +456,7 @@
       "social media"
     ],
     "createdAt": "2025-09-07T21:40:43.748Z",
-    "updatedAt": "2025-09-07T21:40:43.748Z",
+    "updatedAt": "2025-09-07T21:49:17.556Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -471,7 +471,7 @@
     "description": "Design and create GleanIn templates that will be used for the speakers during the hackathon. Ensure the templates align with the event's theme and branding.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "content",
     "dependencies": [
@@ -484,7 +484,7 @@
       "speakers"
     ],
     "createdAt": "2025-09-07T21:41:05.530Z",
-    "updatedAt": "2025-09-07T21:41:05.530Z",
+    "updatedAt": "2025-09-07T21:49:17.575Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -499,7 +499,7 @@
     "description": "Create a press release announcement for the upcoming AI Hackathon. The announcement should highlight key details of the event, including the date, venue, key speakers, and main attractions. Use the promotional graphics and event agenda for reference.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-10",
     "category": "marketing",
     "dependencies": [
@@ -513,7 +513,7 @@
       "press release"
     ],
     "createdAt": "2025-09-07T21:41:11.250Z",
-    "updatedAt": "2025-09-07T21:41:11.250Z",
+    "updatedAt": "2025-09-07T21:49:17.589Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
@@ -528,7 +528,7 @@
     "description": "Contact media outlets to promote the upcoming AI Hackathon. Leverage existing relationships and seek out new opportunities for coverage.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "marketing",
     "dependencies": [
@@ -541,7 +541,7 @@
       "promotion"
     ],
     "createdAt": "2025-09-07T21:41:16.525Z",
-    "updatedAt": "2025-09-07T21:41:16.525Z",
+    "updatedAt": "2025-09-07T21:49:17.600Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
@@ -556,7 +556,7 @@
     "description": "Design and create graphics for GleanIn platform indicating 'I am attending' the AI Hackathon. These graphics will be used for attendees to share their participation on social media.",
     "status": "pending",
     "priority": "medium",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "marketing",
     "dependencies": [
@@ -569,7 +569,7 @@
       "marketing"
     ],
     "createdAt": "2025-09-07T21:41:21.935Z",
-    "updatedAt": "2025-09-07T21:41:21.935Z",
+    "updatedAt": "2025-09-07T21:49:17.616Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -584,7 +584,7 @@
     "description": "Design and finalize promotional graphics specifically for ClubIchi. These graphics will be used for various marketing purposes leading up to the AI Hackathon.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "marketing",
     "dependencies": [
@@ -597,7 +597,7 @@
       "graphics"
     ],
     "createdAt": "2025-09-07T21:41:26.143Z",
-    "updatedAt": "2025-09-07T21:41:26.143Z",
+    "updatedAt": "2025-09-07T21:49:17.628Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -612,7 +612,7 @@
     "description": "Update the event website with the finalized list of speakers, their bios, and their photos. Ensure the information is accurate and well-presented.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "content",
     "dependencies": [
@@ -625,7 +625,7 @@
       "speakers"
     ],
     "createdAt": "2025-09-07T21:41:33.429Z",
-    "updatedAt": "2025-09-07T21:41:33.429Z",
+    "updatedAt": "2025-09-07T21:49:17.649Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
@@ -640,7 +640,7 @@
     "description": "Collect and add personal details of all contributors to the spreadsheet. This includes their full name, role, contact information, and any other relevant details.",
     "status": "pending",
     "priority": "medium",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-10",
     "category": "content",
     "dependencies": [],
@@ -650,7 +650,7 @@
       "spreadsheet"
     ],
     "createdAt": "2025-09-07T21:45:11.879Z",
-    "updatedAt": "2025-09-07T21:45:11.879Z",
+    "updatedAt": "2025-09-07T21:49:17.662Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
@@ -665,7 +665,7 @@
     "description": "Add the personal details of all contributors to the hackathon website. This information should be pulled from the contributor spreadsheet.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "content",
     "dependencies": [
@@ -677,7 +677,7 @@
       "contributors"
     ],
     "createdAt": "2025-09-07T21:45:18.543Z",
-    "updatedAt": "2025-09-07T21:45:18.543Z",
+    "updatedAt": "2025-09-07T21:49:17.709Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
@@ -692,7 +692,7 @@
     "description": "Update the hackathon website with information about the tech category. This includes the type of projects expected, judging criteria, and any relevant resources.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "content",
     "dependencies": [],
@@ -702,7 +702,7 @@
       "tech category"
     ],
     "createdAt": "2025-09-07T21:45:18.546Z",
-    "updatedAt": "2025-09-07T21:45:18.546Z",
+    "updatedAt": "2025-09-07T21:49:17.727Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
@@ -715,7 +715,7 @@
     "id": "task_1757281522904_029pk2ac1",
     "title": "Test Slack bot task integration into json file on heroku",
     "description": "Ensure that the Slack bot is correctly integrated into the json file on Heroku. This is crucial for task management and coordination.",
-    "status": "pending",
+    "status": "completed",
     "priority": "high",
     "assignee": null,
     "dueDate": "2025-09-10",
@@ -731,7 +731,7 @@
       "heroku"
     ],
     "createdAt": "2025-09-07T21:45:22.904Z",
-    "updatedAt": "2025-09-07T21:45:22.904Z",
+    "updatedAt": "2025-09-07T21:49:17.740Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
