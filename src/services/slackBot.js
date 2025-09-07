@@ -617,6 +617,29 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     }
   }
 
+  async postToChannel(message, channelId = null) {
+    if (!this.isConfigured || !this.app) {
+      logger.warn('Slack bot not configured, cannot post to channel');
+      return false;
+    }
+
+    try {
+      const channel = channelId || process.env.SLACK_CHANNEL_ID || 'C094W6PL9M5';
+      
+      await this.app.client.chat.postMessage({
+        token: process.env.SLACK_BOT_TOKEN,
+        channel: channel,
+        ...message
+      });
+
+      logger.info(`Message posted to Slack channel: ${channel}`);
+      return true;
+    } catch (error) {
+      logger.error('Failed to post message to Slack channel:', error);
+      return false;
+    }
+  }
+
   async stop() {
     if (this.isStarted) {
       // With ExpressReceiver, no separate server to stop

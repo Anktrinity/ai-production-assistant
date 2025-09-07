@@ -957,7 +957,7 @@
             chartContainer.appendChild(todayMarker);
             
             // Add date markers
-            const dateMarkers = [0, 7, 14, 21]; // Days from today
+            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed hackathon
             dateMarkers.forEach(days => {
                 const markerDate = new Date(today);
                 markerDate.setDate(markerDate.getDate() + days);
@@ -1018,7 +1018,7 @@
             chartContainer.appendChild(todayMarker);
             
             // Add date markers
-            const dateMarkers = [0, 7, 14, 21]; // Days from today
+            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed hackathon
             dateMarkers.forEach(days => {
                 const markerDate = new Date(today);
                 markerDate.setDate(markerDate.getDate() + days);

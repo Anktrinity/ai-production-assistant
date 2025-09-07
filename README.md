@@ -1,6 +1,6 @@
 # AI Hackathon Production Assistant
 
-An intelligent production assistant system powered by AI for managing your AI hackathon on September 24th, 2024.
+An intelligent production assistant system powered by AI for managing your AI hackathon on September 24th, 2025.
 
 ## 🎯 Overview
 
@@ -110,6 +110,7 @@ SLACK_SIGNING_SECRET=your-signing-secret
 - `GET /api/gaps` - Planning gap analysis
 - `GET /api/summary` - Daily progress summary
 - `POST /api/suggest-tasks` - AI task suggestions
+- `POST /api/daily-summary/trigger` - Manual daily summary posting
 
 ## 🏗 Architecture
 
@@ -121,7 +122,8 @@ src/
 ├── services/
 │   ├── taskManager.js         # Core task management
 │   ├── smartTaskCreator.js    # AI-powered task creation
-│   └── slackBot.js            # Slack integration
+│   ├── slackBot.js            # Slack integration
+│   └── dailySummaryService.js # Automated daily summaries
 ├── utils/
 │   └── logger.js              # Winston logging
 └── public/
@@ -139,10 +141,11 @@ src/
 
 ## 🔄 Automated Features
 
-- **Daily Health Checks** (9 AM): Comprehensive progress analysis
-- **Hourly Monitoring**: Detect overdue and at-risk tasks
-- **Gap Analysis**: Identify missing planning elements
-- **Smart Recommendations**: AI-generated next steps
+- **📅 Daily Summary Reports** (9 AM weekdays): Automated Slack channel updates with overdue, due today, and upcoming tasks
+- **⚡ Real-time Progress Tracking**: Live dashboard updates with WebSocket integration
+- **🔍 Gap Analysis**: Intelligent identification of missing planning elements
+- **🤖 Smart Recommendations**: AI-generated next steps and task suggestions
+- **⏰ Timeline Management**: Automatic deadline awareness and risk detection
 
 ## 🤝 Contributing
 
@@ -163,5 +166,5 @@ MIT License - see LICENSE file for details.
 
 ---
 
-**Built for the September 24th AI Hackathon** 🎯
-*Intelligent task management with AI assistance*
+**Built for the September 24th, 2025 AI Hackathon** 🎯
+*Intelligent task management with AI assistance and automated daily summaries*

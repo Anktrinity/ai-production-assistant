@@ -8,6 +8,7 @@ const logger = require('./utils/logger');
 const taskManager = require('./services/taskManager');
 const smartTaskCreator = require('./services/smartTaskCreator');
 const slackBot = require('./services/slackBot');
+const dailySummaryService = require('./services/dailySummaryService');
 
 const app = express();
 const server = http.createServer(app);
@@ -282,6 +283,16 @@ app.get('/api/summary', (req, res) => {
   }
 });
 
+app.post('/api/daily-summary/trigger', async (req, res) => {
+  try {
+    await dailySummaryService.triggerManualSummary();
+    res.json({ success: true, message: 'Daily summary posted to Slack' });
+  } catch (error) {
+    logger.error('Failed to trigger daily summary:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Legacy AI routes (for backward compatibility)
 app.post('/api/analyze', async (req, res) => {
   try {
@@ -379,6 +390,9 @@ io.on('connection', (socket) => {
 slackBot.start().catch(error => {
   logger.error('Failed to initialize Slack bot:', error);
 });
+
+// Initialize daily summary service
+dailySummaryService.start();
 
 // Error handling
 app.use((err, req, res, next) => {
