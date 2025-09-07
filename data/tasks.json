@@ -633,5 +633,111 @@
     "daysUntilDue": 5,
     "isAtRisk": false,
     "urgencyLevel": "high"
+  },
+  {
+    "id": "task_1757281511879_5fwvieczs",
+    "title": "Add personal details to contributor spreadsheet",
+    "description": "Collect and add personal details of all contributors to the spreadsheet. This includes their full name, role, contact information, and any other relevant details.",
+    "status": "pending",
+    "priority": "medium",
+    "assignee": null,
+    "dueDate": "2025-09-10",
+    "category": "content",
+    "dependencies": [],
+    "estimatedHours": 2,
+    "tags": [
+      "contributors",
+      "spreadsheet"
+    ],
+    "createdAt": "2025-09-07T21:45:11.879Z",
+    "updatedAt": "2025-09-07T21:45:11.879Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": false,
+    "isOverdue": false,
+    "daysUntilDue": 3,
+    "isAtRisk": false,
+    "urgencyLevel": "high"
+  },
+  {
+    "id": "task_1757281518543_kb5fyaslb",
+    "title": "Update website with contributor details",
+    "description": "Add the personal details of all contributors to the hackathon website. This information should be pulled from the contributor spreadsheet.",
+    "status": "pending",
+    "priority": "high",
+    "assignee": null,
+    "dueDate": "2025-09-12",
+    "category": "content",
+    "dependencies": [
+      "Add personal details to contributor spreadsheet"
+    ],
+    "estimatedHours": 3,
+    "tags": [
+      "website",
+      "contributors"
+    ],
+    "createdAt": "2025-09-07T21:45:18.543Z",
+    "updatedAt": "2025-09-07T21:45:18.543Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": true,
+    "isOverdue": false,
+    "daysUntilDue": 5,
+    "isAtRisk": false,
+    "urgencyLevel": "high"
+  },
+  {
+    "id": "task_1757281518546_mvj0sgvp7",
+    "title": "Update website with tech category details",
+    "description": "Update the hackathon website with information about the tech category. This includes the type of projects expected, judging criteria, and any relevant resources.",
+    "status": "pending",
+    "priority": "high",
+    "assignee": null,
+    "dueDate": "2025-09-12",
+    "category": "content",
+    "dependencies": [],
+    "estimatedHours": 2,
+    "tags": [
+      "website",
+      "tech category"
+    ],
+    "createdAt": "2025-09-07T21:45:18.546Z",
+    "updatedAt": "2025-09-07T21:45:18.546Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": true,
+    "isOverdue": false,
+    "daysUntilDue": 5,
+    "isAtRisk": false,
+    "urgencyLevel": "high"
+  },
+  {
+    "id": "task_1757281522904_029pk2ac1",
+    "title": "Test Slack bot task integration into json file on heroku",
+    "description": "Ensure that the Slack bot is correctly integrated into the json file on Heroku. This is crucial for task management and coordination.",
+    "status": "pending",
+    "priority": "high",
+    "assignee": null,
+    "dueDate": "2025-09-10",
+    "category": "tech",
+    "dependencies": [
+      "Build the virtual event platform VCS"
+    ],
+    "estimatedHours": 4,
+    "tags": [
+      "slack",
+      "bot",
+      "integration",
+      "heroku"
+    ],
+    "createdAt": "2025-09-07T21:45:22.904Z",
+    "updatedAt": "2025-09-07T21:45:22.904Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": true,
+    "isOverdue": false,
+    "daysUntilDue": 3,
+    "isAtRisk": false,
+    "urgencyLevel": "high"
   }
 ]
