@@ -10,6 +10,7 @@
     "category": "marketing",
     "dependencies": [],
     "estimatedHours": 12,
+    "progress": 0,
     "tags": [
       "design",
       "social-media",
@@ -21,7 +22,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -11,
+    "daysUntilDue": -19,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -36,20 +37,21 @@
     "category": "content",
     "dependencies": [],
     "estimatedHours": 15,
+    "progress": 75,
     "tags": [
       "agenda",
       "speakers",
       "schedule"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-04T22:29:15.822Z",
+    "updatedAt": "2025-09-15T14:31:24.044Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 9,
-    "isAtRisk": false,
-    "urgencyLevel": "critical"
+    "daysUntilDue": 1,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_4nexzypgi",
@@ -62,6 +64,7 @@
     "category": "content",
     "dependencies": [],
     "estimatedHours": 8,
+    "progress": 0,
     "tags": [
       "glitch",
       "robot",
@@ -73,9 +76,9 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -5,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_l221vr9b0",
@@ -88,6 +91,7 @@
     "category": "marketing",
     "dependencies": [],
     "estimatedHours": 10,
+    "progress": 0,
     "tags": [
       "social-media",
       "bots",
@@ -99,7 +103,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -11,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -114,20 +118,21 @@
     "category": "tech",
     "dependencies": [],
     "estimatedHours": 40,
+    "progress": 75,
     "tags": [
       "vcs",
       "platform",
       "virtual-event"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-04T22:29:29.511Z",
+    "updatedAt": "2025-09-15T14:31:24.037Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 8,
-    "isAtRisk": false,
-    "urgencyLevel": "critical"
+    "daysUntilDue": 0,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_po73mexpc",
@@ -142,6 +147,7 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 12,
+    "progress": 0,
     "tags": [
       "vcs",
       "luma",
@@ -153,7 +159,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -4,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -170,26 +176,27 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 8,
+    "progress": 80,
     "tags": [
       "chatbase",
       "bot",
       "vcs"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-03T20:08:06.696Z",
+    "updatedAt": "2025-09-15T14:31:24.035Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
-    "isOverdue": true,
-    "daysUntilDue": -1,
+    "isOverdue": false,
+    "daysUntilDue": -9,
     "isAtRisk": true,
-    "urgencyLevel": "overdue"
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_63q0oaxzw",
     "title": "Set up Snapsight integration in VCS",
     "description": "Integrate Snapsight functionality into the VCS platform. 25% complete",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "high",
     "assignee": "Peter & Jennifer",
     "dueDate": "2025-09-06T15:00:00.000Z",
@@ -198,20 +205,21 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 8,
+    "progress": 100,
     "tags": [
       "snapsight",
       "integration",
       "vcs"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-03T20:08:06.696Z",
+    "updatedAt": "2025-09-15T15:09:56.377Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
-    "isOverdue": true,
-    "daysUntilDue": -1,
+    "isOverdue": false,
+    "daysUntilDue": -9,
     "isAtRisk": true,
-    "urgencyLevel": "overdue"
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_x0pfqky1g",
@@ -224,20 +232,21 @@
     "category": "content",
     "dependencies": [],
     "estimatedHours": 16,
+    "progress": 90,
     "tags": [
       "graphics",
       "overlay",
       "live-stream"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-03T20:08:06.696Z",
+    "updatedAt": "2025-09-15T14:31:24.041Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_na3e574vf",
@@ -252,26 +261,27 @@
       "Design graphics overlay package for LIVE virtual event"
     ],
     "estimatedHours": 6,
+    "progress": 75,
     "tags": [
       "streamyard",
       "graphics",
       "scenes"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-03T20:08:06.696Z",
+    "updatedAt": "2025-09-15T14:31:24.045Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 10,
-    "isAtRisk": false,
-    "urgencyLevel": "medium"
+    "daysUntilDue": 2,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1756930086696_rqbule4zy",
     "title": "Get a Headcount of all Sponsors for Booths in VCS",
     "description": "Collect sponsor booth requirements and finalize virtual booth allocation. 35% complete",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "medium",
     "assignee": "Liz",
     "dueDate": "2025-09-10T15:00:00.000Z",
@@ -280,20 +290,21 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 4,
+    "progress": 100,
     "tags": [
       "sponsors",
       "booths",
       "headcount"
     ],
     "createdAt": "2025-09-03T20:08:06.696Z",
-    "updatedAt": "2025-09-03T20:08:06.696Z",
+    "updatedAt": "2025-09-15T15:10:11.084Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -5,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757024731920_mbwf85f50",
@@ -308,19 +319,20 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 10,
+    "progress": 85,
     "tags": [
       "VCS",
       "resource center"
     ],
     "createdAt": "2025-09-04T22:25:31.920Z",
-    "updatedAt": "2025-09-04T22:25:31.920Z",
+    "updatedAt": "2025-09-15T14:36:38.788Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 10,
-    "isAtRisk": false,
-    "urgencyLevel": "medium"
+    "daysUntilDue": 2,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757026300471_txgd6y6j4",
@@ -341,6 +353,7 @@
       "Set up Resource Center in VCS"
     ],
     "estimatedHours": 8,
+    "progress": 0,
     "tags": [
       "rehearsal",
       "tech",
@@ -352,15 +365,15 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 10,
-    "isAtRisk": false,
-    "urgencyLevel": "critical"
+    "daysUntilDue": 2,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281148995_g9k32lglk",
     "title": "Set up live Q&A session for the hackathon",
     "description": "Plan and prepare for a live Q&A session during the hackathon. This includes deciding on the format, preparing questions, and setting up the necessary technology.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2024-09-20",
@@ -371,26 +384,27 @@
       "Set up Snapsight integration in VCS"
     ],
     "estimatedHours": 8,
+    "progress": 75,
     "tags": [
       "Q&A",
       "live",
       "interaction"
     ],
     "createdAt": "2025-09-07T21:39:08.995Z",
-    "updatedAt": "2025-09-07T21:58:10.209Z",
+    "updatedAt": "2025-09-15T14:31:24.030Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
-    "isOverdue": true,
-    "daysUntilDue": -352,
+    "isOverdue": false,
+    "daysUntilDue": -360,
     "isAtRisk": true,
-    "urgencyLevel": "overdue"
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281231068_qcut6luos",
     "title": "Schedule Live Q&A for September 10",
     "description": "Plan and schedule a live Q&A session for the hackathon participants. This includes setting up the platform, preparing the questions, and informing the participants.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-09",
@@ -400,18 +414,19 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 8,
+    "progress": 75,
     "tags": [
       "Q&A",
       "live session",
       "content"
     ],
     "createdAt": "2025-09-07T21:40:31.068Z",
-    "updatedAt": "2025-09-07T21:49:17.540Z",
+    "updatedAt": "2025-09-15T14:31:24.042Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 2,
+    "daysUntilDue": -6,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -419,7 +434,7 @@
     "id": "task_1757281243748_b0ft6w7vx",
     "title": "Create Top 5 reasons to attend carousel",
     "description": "Create a carousel for marketing purposes showcasing the top 5 reasons to attend the hackathon. This will be used for promotional purposes on various platforms.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -428,26 +443,27 @@
       "Design promotional graphics for social media"
     ],
     "estimatedHours": 5,
+    "progress": 80,
     "tags": [
       "carousel",
       "promotion",
       "social media"
     ],
     "createdAt": "2025-09-07T21:40:43.748Z",
-    "updatedAt": "2025-09-07T21:49:17.556Z",
+    "updatedAt": "2025-09-15T14:36:38.776Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281265530_lmax5i9k0",
     "title": "Create GleanIn templates for speakers",
     "description": "Design and create GleanIn templates that will be used for the speakers during the hackathon. Ensure the templates align with the event's theme and branding.",
-    "status": "pending",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -456,26 +472,27 @@
       "Finalize event agenda and speaker lineup"
     ],
     "estimatedHours": 8,
+    "progress": 100,
     "tags": [
       "GleanIn",
       "templates",
       "speakers"
     ],
     "createdAt": "2025-09-07T21:41:05.530Z",
-    "updatedAt": "2025-09-07T21:49:17.575Z",
+    "updatedAt": "2025-09-15T15:10:17.542Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281271250_mycustxp5",
     "title": "Draft PR announcement for AI Hackathon",
     "description": "Create a press release announcement for the upcoming AI Hackathon. The announcement should highlight key details of the event, including the date, venue, key speakers, and main attractions. Use the promotional graphics and event agenda for reference.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-10",
@@ -485,26 +502,27 @@
       "Finalize event agenda and speaker lineup"
     ],
     "estimatedHours": 3,
+    "progress": 75,
     "tags": [
       "PR",
       "announcement",
       "press release"
     ],
     "createdAt": "2025-09-07T21:41:11.250Z",
-    "updatedAt": "2025-09-07T21:49:17.589Z",
+    "updatedAt": "2025-09-15T14:31:24.038Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -5,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281276525_hvd0o9x4a",
     "title": "Reach out to media contacts",
     "description": "Contact media outlets to promote the upcoming AI Hackathon. Leverage existing relationships and seek out new opportunities for coverage.",
-    "status": "pending",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -514,25 +532,26 @@
       "Finalize event agenda and speaker lineup"
     ],
     "estimatedHours": 8,
+    "progress": 100,
     "tags": [
       "media",
       "promotion"
     ],
     "createdAt": "2025-09-07T21:41:16.525Z",
-    "updatedAt": "2025-09-07T21:49:17.600Z",
+    "updatedAt": "2025-09-15T15:10:11.108Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281281935_302u50hg3",
     "title": "Create GleanIn 'I am attending' graphics",
     "description": "Design and create graphics for GleanIn platform indicating 'I am attending' the AI Hackathon. These graphics will be used for attendees to share their participation on social media.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "medium",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -541,26 +560,27 @@
       "Design promotional graphics for social media"
     ],
     "estimatedHours": 5,
+    "progress": 75,
     "tags": [
       "GleanIn",
       "graphics",
       "marketing"
     ],
     "createdAt": "2025-09-07T21:41:21.935Z",
-    "updatedAt": "2025-09-07T21:49:17.616Z",
+    "updatedAt": "2025-09-15T14:36:38.784Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281286143_5r10gyejb",
     "title": "Create ClubIchi promotion graphics",
     "description": "Design and finalize promotional graphics specifically for ClubIchi. These graphics will be used for various marketing purposes leading up to the AI Hackathon.",
-    "status": "pending",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -569,26 +589,27 @@
       "Design promotional graphics for social media"
     ],
     "estimatedHours": 8,
+    "progress": 100,
     "tags": [
       "ClubIchi",
       "promotion",
       "graphics"
     ],
     "createdAt": "2025-09-07T21:41:26.143Z",
-    "updatedAt": "2025-09-07T21:49:17.628Z",
+    "updatedAt": "2025-09-15T15:10:17.551Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281293429_qia1745jy",
     "title": "Add speakers to Website",
     "description": "Update the event website with the finalized list of speakers, their bios, and their photos. Ensure the information is accurate and well-presented.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -597,51 +618,53 @@
       "Finalize event agenda and speaker lineup"
     ],
     "estimatedHours": 3,
+    "progress": 80,
     "tags": [
       "website",
       "content",
       "speakers"
     ],
     "createdAt": "2025-09-07T21:41:33.429Z",
-    "updatedAt": "2025-09-07T21:49:17.649Z",
+    "updatedAt": "2025-09-15T14:36:38.782Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281511879_5fwvieczs",
     "title": "Add personal details to contributor spreadsheet",
     "description": "Collect and add personal details of all contributors to the spreadsheet. This includes their full name, role, contact information, and any other relevant details.",
-    "status": "pending",
+    "status": "completed",
     "priority": "medium",
     "assignee": "Liz",
     "dueDate": "2025-09-10",
     "category": "content",
     "dependencies": [],
     "estimatedHours": 2,
+    "progress": 100,
     "tags": [
       "contributors",
       "spreadsheet"
     ],
     "createdAt": "2025-09-07T21:45:11.879Z",
-    "updatedAt": "2025-09-07T21:49:17.662Z",
+    "updatedAt": "2025-09-15T15:10:11.093Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -5,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281518543_kb5fyaslb",
     "title": "Update website with contributor details",
     "description": "Add the personal details of all contributors to the hackathon website. This information should be pulled from the contributor spreadsheet.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -650,44 +673,46 @@
       "Add personal details to contributor spreadsheet"
     ],
     "estimatedHours": 3,
+    "progress": 85,
     "tags": [
       "website",
       "contributors"
     ],
     "createdAt": "2025-09-07T21:45:18.543Z",
-    "updatedAt": "2025-09-07T21:49:17.709Z",
+    "updatedAt": "2025-09-15T14:36:38.790Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281518546_mvj0sgvp7",
     "title": "Update website with tech category details",
     "description": "Update the hackathon website with information about the tech category. This includes the type of projects expected, judging criteria, and any relevant resources.",
-    "status": "pending",
+    "status": "in_progress",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
     "category": "content",
     "dependencies": [],
     "estimatedHours": 2,
+    "progress": 80,
     "tags": [
       "website",
       "tech category"
     ],
     "createdAt": "2025-09-07T21:45:18.546Z",
-    "updatedAt": "2025-09-07T21:49:17.727Z",
+    "updatedAt": "2025-09-15T14:36:38.792Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 5,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -3,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1757281522904_029pk2ac1",
@@ -702,6 +727,7 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 4,
+    "progress": 0,
     "tags": [
       "slack",
       "bot",
@@ -714,8 +740,8 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "high"
+    "daysUntilDue": -5,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   }
 ]

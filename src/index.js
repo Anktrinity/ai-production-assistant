@@ -285,8 +285,14 @@ app.get('/api/summary', (req, res) => {
 
 app.post('/api/daily-summary/trigger', async (req, res) => {
   try {
-    await dailySummaryService.triggerManualSummary();
-    res.json({ success: true, message: 'Daily summary posted to Slack' });
+    const force = req.query.force === 'true';
+    const success = await dailySummaryService.triggerManualSummary(force);
+    
+    if (success) {
+      res.json({ success: true, message: 'Daily summary posted to Slack' });
+    } else {
+      res.json({ success: true, message: 'Daily summary already posted today (use ?force=true to override)' });
+    }
   } catch (error) {
     logger.error('Failed to trigger daily summary:', error);
     res.status(500).json({ success: false, error: error.message });

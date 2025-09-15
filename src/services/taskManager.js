@@ -264,15 +264,14 @@ class TaskManager {
     const overdue = tasks.filter(t => t.isOverdue()).length;
     const atRisk = tasks.filter(t => t.isAtRisk()).length;
     
-    // Calculate weighted completion rate based on percentages in descriptions
+    // Calculate weighted completion rate based on progress field
     let totalWeightedCompletion = 0;
     tasks.forEach(task => {
       if (task.status === 'completed') {
         totalWeightedCompletion += 100;
       } else if (task.status === 'in_progress') {
-        // Extract percentage from description
-        const percentMatch = task.description.match(/(\d+)%\s+complete/);
-        const percentage = percentMatch ? parseInt(percentMatch[1]) : 50; // Default 50% if no percentage found
+        // Use progress field, default to 50% if not set
+        const percentage = task.progress || 50;
         totalWeightedCompletion += percentage;
       }
       // Pending tasks contribute 0%

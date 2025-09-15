@@ -10,6 +10,7 @@ class Task {
     this.category = data.category || 'general'; // venue, catering, tech, marketing, etc.
     this.dependencies = data.dependencies || [];
     this.estimatedHours = data.estimatedHours || 1;
+    this.progress = data.progress || 0; // 0-100 percentage completion
     this.tags = data.tags || [];
     this.createdAt = data.createdAt || new Date().toISOString();
     this.updatedAt = data.updatedAt || new Date().toISOString();
@@ -47,6 +48,8 @@ class Task {
 
   isOverdue() {
     if (!this.dueDate || this.status === 'completed') return false;
+    // If task is 75% or more complete, don't consider it overdue
+    if (this.progress >= 75) return false;
     return new Date(this.dueDate) < new Date();
   }
 
@@ -89,6 +92,7 @@ class Task {
       category: this.category,
       dependencies: this.dependencies,
       estimatedHours: this.estimatedHours,
+      progress: this.progress,
       tags: this.tags,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
