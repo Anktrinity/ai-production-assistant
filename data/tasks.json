@@ -29,15 +29,15 @@
   {
     "id": "task_1756930086696_qyhi1wyof",
     "title": "Finalize event agenda and speaker lineup",
-    "description": "Complete the event schedule and confirm all speakers. 75% complete",
-    "status": "in_progress",
+    "description": "Complete the event schedule and confirm all speakers. 100% complete",
+    "status": "completed",
     "priority": "critical",
     "assignee": "Sarah Beth, Pete",
     "dueDate": "2025-09-16T15:00:00.000Z",
     "category": "content",
     "dependencies": [],
     "estimatedHours": 15,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "agenda",
       "speakers",
@@ -110,15 +110,15 @@
   {
     "id": "task_1756930086696_dgihlzrw7",
     "title": "Build the virtual event platform VCS",
-    "description": "Develop and deploy the Virtual Conference System (VCS) platform. 55% complete",
-    "status": "in_progress",
+    "description": "Develop and deploy the Virtual Conference System (VCS) platform. 100% complete",
+    "status": "completed",
     "priority": "critical",
     "assignee": "Michelle",
     "dueDate": "2025-09-15T15:00:00.000Z",
     "category": "tech",
     "dependencies": [],
     "estimatedHours": 40,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "vcs",
       "platform",
@@ -166,8 +166,8 @@
   {
     "id": "task_1756930086696_46puaspf1",
     "title": "Set up Chatbase Bot integration in VCS",
-    "description": "Configure Chatbase Bot functionality within the VCS platform. 45% complete",
-    "status": "in_progress",
+    "description": "Configure Chatbase Bot functionality within the VCS platform. 100% complete",
+    "status": "completed",
     "priority": "high",
     "assignee": "Peter & Michelle",
     "dueDate": "2025-09-06T15:00:00.000Z",
@@ -176,7 +176,7 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 8,
-    "progress": 80,
+    "progress": 100,
     "tags": [
       "chatbase",
       "bot",
@@ -224,15 +224,15 @@
   {
     "id": "task_1756930086696_x0pfqky1g",
     "title": "Design graphics overlay package for LIVE virtual event",
-    "description": "Create comprehensive graphics package for live streaming. 15% complete",
-    "status": "in_progress",
+    "description": "Create comprehensive graphics package for live streaming. 100% complete",
+    "status": "completed",
     "priority": "high",
     "assignee": "Arthur & Sara Beth",
     "dueDate": "2025-09-12T15:00:00.000Z",
     "category": "content",
     "dependencies": [],
     "estimatedHours": 16,
-    "progress": 90,
+    "progress": 100,
     "tags": [
       "graphics",
       "overlay",
@@ -251,8 +251,8 @@
   {
     "id": "task_1756930086696_na3e574vf",
     "title": "Upload & Build Graphics Scenes in Streamyard",
-    "description": "Set up all graphic scenes and overlays in Streamyard platform. 5% complete",
-    "status": "in_progress",
+    "description": "Set up all graphic scenes and overlays in Streamyard platform. 100% complete",
+    "status": "completed",
     "priority": "high",
     "assignee": "Anca",
     "dueDate": "2025-09-17T15:00:00.000Z",
@@ -261,7 +261,7 @@
       "Design graphics overlay package for LIVE virtual event"
     ],
     "estimatedHours": 6,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "streamyard",
       "graphics",
