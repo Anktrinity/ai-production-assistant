@@ -771,32 +771,6 @@
     "urgencyLevel": "medium"
   },
   {
-    "id": "task_1758071537569_0yklvtfsw",
-    "title": "Fill out post con and tools sheet",
-    "description": "Complete the post-conference and tools sheet with all relevant details and updates after the hackathon.",
-    "status": "pending",
-    "priority": "medium",
-    "assignee": "jlgiobres",
-    "dueDate": "2025-09-29",
-    "category": "logistics",
-    "dependencies": [],
-    "estimatedHours": 2,
-    "progress": 0,
-    "tags": [
-      "post-event",
-      "documentation"
-    ],
-    "createdAt": "2025-09-17T01:12:17.569Z",
-    "updatedAt": "2025-09-17T01:12:17.569Z",
-    "completedAt": null,
-    "notes": [],
-    "isOnCriticalPath": false,
-    "isOverdue": false,
-    "daysUntilDue": 12,
-    "isAtRisk": false,
-    "urgencyLevel": "medium"
-  },
-  {
     "id": "task_1758164800000_polls4event",
     "title": "Provide Polls for Event",
     "description": "Create and set up interactive polls for the AI Hackathon event to engage attendees and gather feedback during presentations and sessions.",
