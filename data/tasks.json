@@ -830,7 +830,7 @@
     "description": "Gather and provide additional information requested by Anca for the AI Hackathon production and technical setup requirements.",
     "status": "pending",
     "priority": "high",
-    "assignee": null,
+    "assignee": "Heidi",
     "dueDate": "2025-09-18T15:00:00.000Z",
     "category": "content",
     "dependencies": [],
