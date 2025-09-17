@@ -32,9 +32,16 @@ class SmartTaskCreator {
 
       const result = JSON.parse(response.choices[0].message.content);
       
-      // Create the tasks
+      // Create the tasks with deduplication
       const createdTasks = [];
       for (const taskData of result.tasks) {
+        // Check for duplicate tasks
+        const existingTask = this.findSimilarTask(taskData);
+        if (existingTask) {
+          logger.info(`Skipping duplicate task: ${taskData.title} (similar to existing: ${existingTask.title})`);
+          continue;
+        }
+        
         const task = taskManager.createTask(taskData);
         createdTasks.push(task);
       }
@@ -54,12 +61,33 @@ class SmartTaskCreator {
     }
   }
 
+  findSimilarTask(newTaskData) {
+    const existingTasks = taskManager.getAllTasks();
+    
+    // Check for exact title match
+    const exactMatch = existingTasks.find(task => 
+      task.title.toLowerCase() === newTaskData.title.toLowerCase()
+    );
+    if (exactMatch) return exactMatch;
+    
+    // Check for similar title (80% similarity using simple word overlap)
+    const newWords = newTaskData.title.toLowerCase().split(' ');
+    const similarTask = existingTasks.find(task => {
+      const existingWords = task.title.toLowerCase().split(' ');
+      const commonWords = newWords.filter(word => existingWords.includes(word));
+      const similarity = commonWords.length / Math.max(newWords.length, existingWords.length);
+      return similarity >= 0.8 && task.category === newTaskData.category;
+    });
+    
+    return similarTask;
+  }
+
   getSystemPrompt() {
-    return `You are an AI hackathon production assistant. Your role is to help organize an AI hackathon on September 24th, 2024.
+    return `You are an AI hackathon production assistant. Your role is to help organize an AI hackathon on September 24th, 2025.
 
 CONTEXT:
 - Current date: ${new Date().toISOString().split('T')[0]}
-- Hackathon date: September 24th, 2024
+- Hackathon date: September 24th, 2025
 - Days remaining: ${taskManager.getDaysUntilHackathon()}
 
 CATEGORIES:

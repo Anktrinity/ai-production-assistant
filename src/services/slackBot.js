@@ -9,6 +9,7 @@ class SlackBot {
     this.receiver = null;
     this.isConfigured = false;
     this.isStarted = false;
+    this.recentCommands = new Map(); // For deduplication
     
     // Only initialize if credentials are available
     if (process.env.SLACK_BOT_TOKEN && process.env.SLACK_SIGNING_SECRET) {
@@ -90,6 +91,29 @@ class SlackBot {
           response_type: 'ephemeral'
         });
         return;
+      }
+
+      // Check for duplicate commands (within 30 seconds)
+      const commandKey = `${command.user_id}:${command.text.trim()}`;
+      const now = Date.now();
+      const lastCommand = this.recentCommands.get(commandKey);
+      
+      if (lastCommand && (now - lastCommand) < 30000) {
+        logger.info(`Ignoring duplicate command from ${command.user_name}: ${command.text}`);
+        await respond({
+          text: '⚠️ Duplicate command detected. Please wait before running the same command again.',
+          response_type: 'ephemeral'
+        });
+        return;
+      }
+      
+      this.recentCommands.set(commandKey, now);
+      
+      // Clean up old commands (older than 5 minutes)
+      for (const [key, timestamp] of this.recentCommands.entries()) {
+        if (now - timestamp > 300000) {
+          this.recentCommands.delete(key);
+        }
       }
 
       try {
