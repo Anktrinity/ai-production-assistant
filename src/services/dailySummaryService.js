@@ -18,6 +18,13 @@ class DailySummaryService {
       return;
     }
 
+    // Only run automated summaries in production to prevent duplicates
+    if (process.env.NODE_ENV !== 'production') {
+      logger.info('Daily summary service disabled in development environment to prevent duplicates');
+      logger.info('Use manual trigger via API endpoint for testing');
+      return;
+    }
+
     // Schedule daily summary at 9 AM Monday-Friday until hackathon day
     cron.schedule('0 9 * * 1-5', () => {
       // Check if we've reached hackathon day (September 24, 2025)
@@ -63,7 +70,9 @@ class DailySummaryService {
       const lockData = {
         lastPostDate: new Date().toDateString(),
         timestamp: new Date().toISOString(),
-        processId: process.pid
+        processId: process.pid,
+        environment: process.env.NODE_ENV || 'development',
+        appInstance: process.env.DYNO || 'local'
       };
       
       // Ensure data directory exists
@@ -73,7 +82,7 @@ class DailySummaryService {
       }
       
       fs.writeFileSync(this.lockFilePath, JSON.stringify(lockData, null, 2));
-      logger.info(`Daily summary lock file updated by process ${process.pid}`);
+      logger.info(`Daily summary lock file updated by process ${process.pid} (${lockData.environment}:${lockData.appInstance})`);
     } catch (error) {
       logger.error('Could not update daily summary lock file:', error);
     }
@@ -304,12 +313,16 @@ class DailySummaryService {
     });
 
     // Summary footer
+    const dashboardUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://hackathon-hq-18fbc8a64df9.herokuapp.com/' 
+      : 'http://localhost:3000';
+      
     blocks.push({
       type: 'context',
       elements: [
         {
           type: 'mrkdwn',
-          text: `💡 Use \`/hackathon summary\` for detailed breakdown or visit http://localhost:3000 for full task management`
+          text: `💡 Use \`/hackathon summary\` for detailed breakdown or visit ${dashboardUrl} for full task management`
         }
       ]
     });
