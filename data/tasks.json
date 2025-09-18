@@ -338,7 +338,7 @@
     "id": "task_1757026300471_txgd6y6j4",
     "title": "Technical Rehearsal for Hackathon",
     "description": "All hands on deck final tech run-through before the hackathon. This includes testing all tech integrations, graphics, and the virtual event platform VCS. Ensure all systems are functioning properly.",
-    "status": "pending",
+    "status": "completed",
     "priority": "critical",
     "assignee": "Anca & Liz",
     "dueDate": "2025-09-17",
@@ -353,7 +353,7 @@
       "Set up Resource Center in VCS"
     ],
     "estimatedHours": 8,
-    "progress": 0,
+    "progress": 100,
     "tags": [
       "rehearsal",
       "tech",
