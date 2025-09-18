@@ -850,5 +850,33 @@
     "daysUntilDue": 1,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
+  },
+  {
+    "id": "task_1758164800003_rosteam",
+    "title": "Add team member names to ROS for live event and Q&A",
+    "description": "Add the names to the ROS of the team members who will go LIVE for your 5 minutes at the event, along with the one person from your team who will join the Q&A. Due before COB 9/18.",
+    "status": "pending",
+    "priority": "high",
+    "assignee": "Pete",
+    "dueDate": "2025-09-18T17:00:00.000Z",
+    "category": "content",
+    "dependencies": [],
+    "estimatedHours": 1,
+    "progress": 0,
+    "tags": [
+      "ROS",
+      "team-members",
+      "live-event",
+      "Q&A"
+    ],
+    "createdAt": "2025-09-17T13:30:00.000Z",
+    "updatedAt": "2025-09-17T13:30:00.000Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": false,
+    "isOverdue": false,
+    "daysUntilDue": 1,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   }
 ]
