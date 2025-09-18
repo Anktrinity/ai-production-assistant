@@ -309,8 +309,8 @@
   {
     "id": "task_1757024731920_mbwf85f50",
     "title": "Set up Resource Center in VCS",
-    "description": "Create and organize a Resource Center within the Virtual Conference System (VCS) to provide attendees with necessary information and materials. 75% complete",
-    "status": "in_progress",
+    "description": "Create and organize a Resource Center within the Virtual Conference System (VCS) to provide attendees with necessary information and materials. 100% complete",
+    "status": "completed",
     "priority": "high",
     "assignee": "Michelle",
     "dueDate": "2025-09-17",
@@ -319,7 +319,7 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 10,
-    "progress": 85,
+    "progress": 100,
     "tags": [
       "VCS",
       "resource center"
@@ -373,7 +373,7 @@
     "id": "task_1757281148995_g9k32lglk",
     "title": "Set up live Q&A session for the hackathon",
     "description": "Plan and prepare for a live Q&A session during the hackathon. This includes deciding on the format, preparing questions, and setting up the necessary technology.",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2024-09-20",
@@ -384,7 +384,7 @@
       "Set up Snapsight integration in VCS"
     ],
     "estimatedHours": 8,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "Q&A",
       "live",
@@ -404,7 +404,7 @@
     "id": "task_1757281231068_qcut6luos",
     "title": "Schedule Live Q&A for September 10",
     "description": "Plan and schedule a live Q&A session for the hackathon participants. This includes setting up the platform, preparing the questions, and informing the participants.",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-09",
@@ -414,7 +414,7 @@
       "Build the virtual event platform VCS"
     ],
     "estimatedHours": 8,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "Q&A",
       "live session",
@@ -551,7 +551,7 @@
     "id": "task_1757281281935_302u50hg3",
     "title": "Create GleanIn 'I am attending' graphics",
     "description": "Design and create graphics for GleanIn platform indicating 'I am attending' the AI Hackathon. These graphics will be used for attendees to share their participation on social media.",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "medium",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -560,7 +560,7 @@
       "Design promotional graphics for social media"
     ],
     "estimatedHours": 5,
-    "progress": 75,
+    "progress": 100,
     "tags": [
       "GleanIn",
       "graphics",
@@ -609,7 +609,7 @@
     "id": "task_1757281293429_qia1745jy",
     "title": "Add speakers to Website",
     "description": "Update the event website with the finalized list of speakers, their bios, and their photos. Ensure the information is accurate and well-presented.",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "high",
     "assignee": "Liz",
     "dueDate": "2025-09-12",
@@ -618,7 +618,7 @@
       "Finalize event agenda and speaker lineup"
     ],
     "estimatedHours": 3,
-    "progress": 80,
+    "progress": 100,
     "tags": [
       "website",
       "content",
