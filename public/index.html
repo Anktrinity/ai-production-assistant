@@ -633,7 +633,7 @@
                 case 'overdue':
                     return allTasks.filter(t => t.isOverdue);
                 case 'upcoming':
-                    return allTasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0);
+                    return allTasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0 && t.status !== 'completed');
                 case 'critical':
                     return allTasks.filter(t => t.isOnCriticalPath || t.priority === 'critical');
                 default:
@@ -644,7 +644,7 @@
         function updateFilterCounts() {
             const allCount = allTasks.length;
             const overdueCount = allTasks.filter(t => t.isOverdue).length;
-            const upcomingCount = allTasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0).length;
+            const upcomingCount = allTasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0 && t.status !== 'completed').length;
             const criticalCount = allTasks.filter(t => t.isOnCriticalPath || t.priority === 'critical').length;
             
             document.getElementById('count-all').textContent = `(${allCount})`;
@@ -1061,7 +1061,7 @@
             // Update content section
             const contentContainer = document.getElementById('timeline-content-main');
             const overdueTasks = tasks.filter(t => t.isOverdue);
-            const upcomingTasks = tasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0);
+            const upcomingTasks = tasks.filter(t => t.daysUntilDue <= 7 && t.daysUntilDue > 0 && t.status !== 'completed');
             
             contentContainer.innerHTML = `
                 <div style="margin-bottom: 20px;">
