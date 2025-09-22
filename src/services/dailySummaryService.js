@@ -42,8 +42,24 @@ class DailySummaryService {
       timezone: "America/New_York"
     });
 
+    // Special one-time schedule for 7 AM MNT on September 23, 2025
+    cron.schedule('0 7 23 9 *', () => {
+      const today = new Date();
+      const targetDate = new Date('2025-09-23');
+      
+      // Only run on September 23, 2025
+      if (today.toDateString() === targetDate.toDateString()) {
+        logger.info('Posting special 7 AM MNT update for September 23, 2025');
+        this.postDailySummary('Special pre-hackathon update');
+      }
+    }, {
+      scheduled: true,
+      timezone: "America/Denver" // Mountain Time
+    });
+
     this.isScheduled = true;
     logger.info('Daily summary service started - will post at 9 AM on weekdays until hackathon day (Sept 24, 2025)');
+    logger.info('Special 7 AM MNT update scheduled for September 23, 2025');
     logger.info('Daily summaries will run automatically regardless of user login status');
   }
 
@@ -88,7 +104,7 @@ class DailySummaryService {
     }
   }
 
-  async postDailySummary() {
+  async postDailySummary(customMessage = null) {
     try {
       const today = new Date().toDateString();
       
@@ -105,7 +121,7 @@ class DailySummaryService {
       }
       
       const summary = this.generateDailySummary();
-      const slackMessage = this.formatSlackMessage(summary);
+      const slackMessage = this.formatSlackMessage(summary, customMessage);
       
       // Try posting to channel, fallback to logging the message
       const success = await slackBot.postToChannel(slackMessage);
@@ -174,13 +190,13 @@ class DailySummaryService {
     });
   }
 
-  formatSlackMessage(summary) {
+  formatSlackMessage(summary, customMessage = null) {
     const blocks = [
       {
         type: 'header',
         text: {
           type: 'plain_text',
-          text: `📅 Daily Task Summary - ${summary.date}`
+          text: customMessage ? `🚨 ${customMessage} - ${summary.date}` : `📅 Daily Task Summary - ${summary.date}`
         }
       },
       {
