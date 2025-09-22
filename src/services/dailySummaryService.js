@@ -191,7 +191,15 @@ class DailySummaryService {
             text: `🎯 *${summary.daysUntilHackathon} days until hackathon* | Progress: ${summary.stats.completionRate}% complete`
           }
         ]
-      }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `🚨 *URGENT REMINDER TODAY:*\n\n**AI Hackathon: Tech Run-Through with ALL Speakers, TODAY at 11:30 am ET**`
+        }
+      },
+      { type: 'divider' }
     ];
 
     // Overdue tasks section
