@@ -22,7 +22,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -19,
+    "daysUntilDue": -26,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -49,7 +49,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 1,
+    "daysUntilDue": -6,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -76,7 +76,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -5,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -103,7 +103,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -11,
+    "daysUntilDue": -18,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -130,7 +130,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 0,
+    "daysUntilDue": -7,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -159,7 +159,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -12,
+    "daysUntilDue": -19,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -188,7 +188,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -9,
+    "daysUntilDue": -16,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -217,7 +217,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -9,
+    "daysUntilDue": -16,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -244,7 +244,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -273,7 +273,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 2,
+    "daysUntilDue": -5,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -302,7 +302,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -5,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -330,7 +330,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 2,
+    "daysUntilDue": -5,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -365,7 +365,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": 2,
+    "daysUntilDue": -5,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -396,7 +396,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -360,
+    "daysUntilDue": -367,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -426,7 +426,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -6,
+    "daysUntilDue": -13,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -455,7 +455,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -484,7 +484,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -514,7 +514,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -5,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -543,7 +543,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -572,7 +572,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -601,7 +601,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -630,7 +630,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -656,7 +656,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": -5,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -684,7 +684,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -710,7 +710,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -3,
+    "daysUntilDue": -10,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -740,7 +740,7 @@
     "notes": [],
     "isOnCriticalPath": true,
     "isOverdue": false,
-    "daysUntilDue": -5,
+    "daysUntilDue": -12,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -766,9 +766,9 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 12,
+    "daysUntilDue": 7,
     "isAtRisk": false,
-    "urgencyLevel": "medium"
+    "urgencyLevel": "high"
   },
   {
     "id": "task_1758164800000_polls4event",
@@ -793,9 +793,9 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 3,
-    "isAtRisk": false,
-    "urgencyLevel": "medium"
+    "daysUntilDue": -2,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1758164800001_postsurvey",
@@ -820,9 +820,9 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 7,
-    "isAtRisk": false,
-    "urgencyLevel": "medium"
+    "daysUntilDue": 2,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
   },
   {
     "id": "task_1758164800002_ancainfo",
@@ -847,7 +847,7 @@
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 1,
+    "daysUntilDue": -4,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   },
@@ -855,7 +855,7 @@
     "id": "task_1758164800003_rosteam",
     "title": "Add team member names to ROS for live event and Q&A",
     "description": "Add the names to the ROS of the team members who will go LIVE for your 5 minutes at the event, along with the one person from your team who will join the Q&A. Due before COB 9/18.",
-    "status": "in_progress",
+    "status": "completed",
     "priority": "high",
     "assignee": "Pete & Sara Beth",
     "dueDate": "2025-09-18T17:00:00.000Z",
@@ -870,12 +870,64 @@
       "Q&A"
     ],
     "createdAt": "2025-09-17T13:30:00.000Z",
-    "updatedAt": "2025-09-17T13:30:00.000Z",
+    "updatedAt": "2025-09-22T21:11:31.109Z",
     "completedAt": null,
     "notes": [],
     "isOnCriticalPath": false,
     "isOverdue": false,
-    "daysUntilDue": 1,
+    "daysUntilDue": -4,
+    "isAtRisk": true,
+    "urgencyLevel": "urgent"
+  },
+  {
+    "id": "task_1758575512904_e9g3h14xm",
+    "title": "",
+    "description": "",
+    "status": "pending",
+    "priority": "medium",
+    "assignee": null,
+    "dueDate": null,
+    "category": "general",
+    "dependencies": [],
+    "estimatedHours": 1,
+    "progress": 0,
+    "tags": [],
+    "createdAt": "2025-09-22T21:11:52.904Z",
+    "updatedAt": "2025-09-22T21:11:52.904Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": false,
+    "isOverdue": false,
+    "daysUntilDue": null,
+    "isAtRisk": false,
+    "urgencyLevel": "high"
+  },
+  {
+    "id": "task_1758575571306_7e02mrdgr",
+    "title": "🚨 URGENT: All Teams Complete Post-Con Documentation",
+    "description": "ALL TEAMS MUST complete the post-con and tools sheet TODAY. This is CRITICAL for event wrap-up. Access here: https://docs.google.com/spreadsheets/d/137f0CV4HWFzYM_wo1VpMjG2yEHmTODY9RwN4MeGzaFY/edit?gid=0#gid=0",
+    "status": "in_progress",
+    "priority": "critical",
+    "assignee": "ALL TEAMS",
+    "dueDate": "2025-09-23T23:59:00Z",
+    "category": "content",
+    "dependencies": [],
+    "estimatedHours": 1,
+    "progress": 0,
+    "tags": [
+      "urgent",
+      "post-con",
+      "documentation",
+      "all-teams",
+      "required"
+    ],
+    "createdAt": "2025-09-22T21:12:51.306Z",
+    "updatedAt": "2025-09-22T21:12:51.306Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": true,
+    "isOverdue": false,
+    "daysUntilDue": 2,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
   }
