@@ -212,7 +212,7 @@ class DailySummaryService {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `🚨 *URGENT REMINDER TODAY:*\n\n**AI Hackathon: Tech Run-Through with ALL Speakers, TODAY at 11:30 am ET**`
+          text: `🚨 *FINAL COUNTDOWN:*\n\n**AI Hackathon is TOMORROW (September 24th)! All teams should complete final preparations today.**`
         }
       },
       { type: 'divider' }
