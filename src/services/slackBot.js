@@ -664,6 +664,44 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     }
   }
 
+  async postCongratulations() {
+    const congratsMessage = {
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: '🎉 CONGRATULATIONS TEAM! 🎉'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '*WE DID IT!* The AI Hackathon was a MASSIVE SUCCESS! 🚀\n\n🏆 **100% EVENT COMPLETION ACHIEVED** 🏆\n\nFrom the first planning meetings to this moment, you all have been absolutely INCREDIBLE. Every single person contributed to making this event extraordinary.'
+          }
+        },
+        { type: 'divider' },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '🌟 **What we accomplished together:**\n• Flawless event execution\n• Amazing speaker lineup delivered\n• Perfect tech infrastructure \n• Outstanding team coordination\n• Unforgettable participant experience\n\n*You should all be incredibly proud!* 👏'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '📝 *Quick reminder: Please complete the post-event documentation in the next few days to help us capture all the amazing insights from today.*\n\n**THANK YOU ALL FOR MAKING THIS HAPPEN!** 🙌❤️'
+          }
+        }
+      ]
+    };
+
+    return await this.postToChannel(congratsMessage);
+  }
+
   async stop() {
     if (this.isStarted) {
       // With ExpressReceiver, no separate server to stop

@@ -256,7 +256,9 @@ class TaskManager {
   }
 
   getCompletionStats() {
-    const tasks = this.getAllTasks();
+    const allTasks = this.getAllTasks();
+    // Exclude post-event tasks from completion calculation
+    const tasks = allTasks.filter(t => t.category !== 'post-event');
     const total = tasks.length;
     const completed = tasks.filter(t => t.status === 'completed').length;
     const inProgress = tasks.filter(t => t.status === 'in_progress').length;

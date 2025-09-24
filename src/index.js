@@ -299,6 +299,21 @@ app.post('/api/daily-summary/trigger', async (req, res) => {
   }
 });
 
+app.post('/api/congratulations', async (req, res) => {
+  try {
+    const success = await slackBot.postCongratulations();
+    
+    if (success) {
+      res.json({ success: true, message: 'Congratulations message posted to Slack' });
+    } else {
+      res.json({ success: false, message: 'Failed to post congratulations message' });
+    }
+  } catch (error) {
+    logger.error('Failed to post congratulations:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Legacy AI routes (for backward compatibility)
 app.post('/api/analyze', async (req, res) => {
   try {
