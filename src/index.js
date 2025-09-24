@@ -314,6 +314,21 @@ app.post('/api/congratulations', async (req, res) => {
   }
 });
 
+app.post('/api/event-day-success', async (req, res) => {
+  try {
+    const success = await dailySummaryService.postEventDaySuccess();
+    
+    if (success) {
+      res.json({ success: true, message: 'Event day success message posted to Slack' });
+    } else {
+      res.json({ success: false, message: 'Failed to post event day success message' });
+    }
+  } catch (error) {
+    logger.error('Failed to post event day success:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Legacy AI routes (for backward compatibility)
 app.post('/api/analyze', async (req, res) => {
   try {
