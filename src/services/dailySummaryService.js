@@ -57,14 +57,14 @@ class DailySummaryService {
       timezone: "America/Denver" // Mountain Time
     });
 
-    // Special celebration message for 11 PM MNT on September 24, 2025 (Event Day)
-    cron.schedule('0 23 24 9 *', () => {
+    // Special celebration message for 11 AM MNT on September 24, 2025 (Event Day)
+    cron.schedule('0 11 24 9 *', () => {
       const today = new Date();
       const targetDate = new Date('2025-09-24');
       
       // Only run on September 24, 2025
       if (today.toDateString() === targetDate.toDateString()) {
-        logger.info('Posting special 11 PM MNT celebration message for September 24, 2025');
+        logger.info('Posting special 11 AM MNT celebration message for September 24, 2025');
         this.postEventDaySuccess();
       }
     }, {
@@ -75,7 +75,7 @@ class DailySummaryService {
     this.isScheduled = true;
     logger.info('Daily summary service started - will post at 9 AM on weekdays until hackathon day (Sept 24, 2025)');
     logger.info('Special 7 AM MNT update scheduled for September 23, 2025');
-    logger.info('Special 11 PM MNT celebration message scheduled for September 24, 2025');
+    logger.info('Special 11 AM MNT celebration message scheduled for September 24, 2025');
     logger.info('Daily summaries will run automatically regardless of user login status');
   }
 
@@ -407,21 +407,21 @@ class DailySummaryService {
           type: 'header',
           text: {
             type: 'plain_text',
-            text: '🎉 ALL COMPLETE! EVENT DAY SUCCESS! 🎉'
+            text: '🎉 CONGRATULATIONS TEAM! 🎉'
           }
         },
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '✅ *MISSION ACCOMPLISHED:*\n\n1. ✅ *Post-event tasks updated:*\n    - "📝 Post-Event: Complete Post-Con Documentation" (due Sept 29)\n    - "📋 Post-Event: Fill Out Post-Con and Tools Sheet" (due Sept 29)\n\n2. ✅ *Completion rate now shows 100%* (post-event tasks excluded from calculation)\n\n3. ✅ *Congratulations message sent to Slack team* with:\n    - Celebration of 100% event completion\n    - Recognition of team achievements\n    - Gentle reminder about post-event documentation\n\n4. ✅ *All updates deployed* to production (v55)'
+            text: '🌟 **Congratulations for pulling this together!** For building, breaking and molding AI into shape. \n\n🤖 You\'ve all put incredible hard work into making this event extraordinary.\n\n🎥 **Let\'s make the live stream an excellent display of all the hard work you\'ve all put in!**'
           }
         },
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '🚀 *The dashboard now shows 100% completion rate and 0 overdue tasks!*\n\n🏆 **INCREDIBLE WORK EVERYONE! THE AI HACKATHON WAS A MASSIVE SUCCESS!** 🏆'
+            text: '🎭 **See you all on stage soon!**\n\n🚀 *Ready to showcase the amazing AI innovations we\'ve created together!*'
           }
         }
       ]
