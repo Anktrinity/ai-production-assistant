@@ -716,14 +716,14 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '⚠️ **DEADLINE MOVED UP** ⚠️\n\n📅 **Please fill out post-con documentation by 9/28** (date moved up)\n\n📁 **Make sure any presentations or materials shared during the live event are posted to your team folders**'
+            text: ':warning: *DEADLINE MOVED UP* :warning:\n\n:date: Please fill out post-con documentation by 9/28 (date moved up)\n\n:file_folder: Make sure any presentations or materials shared during the live event are posted to your team folders'
           }
         },
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '🗓️ **POST CON MEETING**: 10/1 at 10:30 AM CT\n\n@Liz please extend our normal team meeting if you haven\'t already.\n\n🔗 Documentation: https://docs.google.com/spreadsheets/d/137f0CV4HWFzYM_wo1VpMjG2yEHmTODY9RwN4MeGzaFY/edit?gid=0#gid=0'
+            text: ':spiral_calendar_pad: *POST CON MEETING*: 10/1 at 10:30 AM CT\n\n@Liz please extend our normal team meeting if you haven\'t already.\n\n:link: Documentation: https://docs.google.com/spreadsheets/d/137f0CV4HWFzYM_wo1VpMjG2yEHmTODY9RwN4MeGzaFY/edit?gid=0#gid=0'
           }
         }
       ]
