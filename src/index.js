@@ -329,6 +329,21 @@ app.post('/api/event-day-success', async (req, res) => {
   }
 });
 
+app.post('/api/post-con-update', async (req, res) => {
+  try {
+    const success = await slackBot.postUpdatedPostConRequirements();
+    
+    if (success) {
+      res.json({ success: true, message: 'Post-con requirements update posted to Slack' });
+    } else {
+      res.json({ success: false, message: 'Failed to post post-con update' });
+    }
+  } catch (error) {
+    logger.error('Failed to post post-con update:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Legacy AI routes (for backward compatibility)
 app.post('/api/analyze', async (req, res) => {
   try {
