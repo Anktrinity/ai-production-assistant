@@ -348,26 +348,15 @@ class TaskManager {
     const gaps = [];
     const tasks = this.getAllTasks();
     const daysLeft = this.getDaysUntilHackathon();
-    
-    // Check for missing critical categories
-    const presentCategories = new Set(tasks.map(t => t.category));
-    const missingCategories = this.categories.filter(cat => !presentCategories.has(cat));
-    
-    missingCategories.forEach(category => {
-      gaps.push({
-        type: 'missing_category',
-        category,
-        severity: 'medium',
-        description: `No tasks found for ${category} category`,
-        suggestedAction: `Create tasks for ${category} planning`
-      });
-    });
 
-    // Skip overdue critical path and unassigned task checks for End of Year Event
-    // These are only relevant for active project phases
+    // Skip all gap checking for End of Year Event - it's a fresh slate event
+    // Only show gaps for active project phases with existing tasks
+    if (tasks.length === 0) {
+      return gaps; // Return empty array for fresh events
+    }
 
-    // Check timeline pressure
-    if (daysLeft <= 14) {
+    // Check timeline pressure only for events with tasks
+    if (daysLeft <= 14 && tasks.length > 0) {
       const incomplete = tasks.filter(t => t.status !== 'completed').length;
       if (incomplete > daysLeft * 2) {
         gaps.push({
