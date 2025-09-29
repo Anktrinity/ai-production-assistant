@@ -926,6 +926,29 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     return await this.postToChannel(morningReport);
   }
 
+  async postPlatformUpdate() {
+    const platformUpdate = {
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: 'Post-AI Hackathon Update for Club Ichi'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `UI/UX Link: https://hackathon-hq-18fbc8a64df9.herokuapp.com/\n\nThe AI Production Assistant that powered our recent hackathon is still fully functional inside the AI Hackathon Slack channel. It now includes the ability to switch between the last AI Hackathon event and a brand-new fictional Club Ichi End-of-Year event with a deadline set for December 31, 2025.\n\nUpdates to this assistant include:\n• Event-specific setup with a live countdown and clean task categories\n• Simplified Slack commands (/assistant, /status, /task, /help)\n• We will need to update the Slack bot with these in order for them to take place. If you could do that, it would be awesome. Otherwise, add me as an authorized user of the app, and will update it\n• Expanded gap analysis across Planning, Logistics, Communication, and Follow-up\n• Critical path tracking for mission-critical items\n• Duplicate prevention + task sync across Slack and dashboard\n• Upgraded dashboard with progress visualization, filtering, and real-time updates\n\nBut this is not all...`
+          }
+        }
+      ]
+    };
+
+    return await this.postToChannel(platformUpdate);
+  }
+
   async stop() {
     if (this.isStarted) {
       // With ExpressReceiver, no separate server to stop
