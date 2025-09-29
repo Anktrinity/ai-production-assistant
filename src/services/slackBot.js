@@ -910,7 +910,7 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `🚀 How to Use:\n• /hackathon [command] - Access AI Hackathon tasks\n• Dashboard: Event switcher dropdown available\n• All your favorite commands work the same way! 🎊`
+            text: `🚀 How to Use:\n• Use event-specific commands based on current event\n• Dashboard: Event switcher dropdown available\n• All your favorite commands work the same way! 🎊`
           }
         },
         {
