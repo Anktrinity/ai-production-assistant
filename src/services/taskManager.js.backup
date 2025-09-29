@@ -2,13 +2,11 @@ const Task = require('../models/Task');
 const fs = require('fs');
 const path = require('path');
 const logger = require('../utils/logger');
-const eventManager = require('./eventManager');
 
 class TaskManager {
   constructor() {
-    this.tasksByEvent = new Map(); // eventId -> Map of tasks
+    this.tasks = new Map();
     this.dataFile = path.join(__dirname, '../../data/tasks.json');
-    this.multiEventDataFile = path.join(__dirname, '../../data/tasks-by-event.json');
     this.hackathonDate = new Date('2025-09-24T09:00:00'); // September 24th, 2025
     this.categories = [
       'tech', 'marketing', 'sponsors', 'content'
@@ -19,31 +17,13 @@ class TaskManager {
 
   loadTasks() {
     try {
-      // Try to load multi-event format first
-      if (fs.existsSync(this.multiEventDataFile)) {
-        const data = JSON.parse(fs.readFileSync(this.multiEventDataFile, 'utf8'));
-        Object.keys(data).forEach(eventId => {
-          const eventTasks = new Map();
-          data[eventId].forEach(taskData => {
-            const task = new Task(taskData);
-            eventTasks.set(task.id, task);
-          });
-          this.tasksByEvent.set(eventId, eventTasks);
-        });
-        logger.info(`Loaded tasks for ${this.tasksByEvent.size} events from multi-event storage`);
-      }
-      // Fallback to single-event format for migration
-      else if (fs.existsSync(this.dataFile)) {
+      if (fs.existsSync(this.dataFile)) {
         const data = JSON.parse(fs.readFileSync(this.dataFile, 'utf8'));
-        const aiHackathonTasks = new Map();
         data.forEach(taskData => {
           const task = new Task(taskData);
-          aiHackathonTasks.set(task.id, task);
+          this.tasks.set(task.id, task);
         });
-        this.tasksByEvent.set('ai-hackathon-2025', aiHackathonTasks);
-        this.tasksByEvent.set('new-event-2025', new Map());
-        logger.info(`Migrated ${data.length} tasks from single-event storage`);
-        this.saveTasks(); // Save in new format
+        logger.info(`Loaded ${this.tasks.size} tasks from storage`);
       }
     } catch (error) {
       logger.error('Failed to load tasks:', error);
@@ -52,44 +32,17 @@ class TaskManager {
 
   saveTasks() {
     try {
-      const dir = path.dirname(this.multiEventDataFile);
+      const dir = path.dirname(this.dataFile);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir, { recursive: true });
       }
-
-      const tasksByEventData = {};
-      this.tasksByEvent.forEach((tasks, eventId) => {
-        tasksByEventData[eventId] = Array.from(tasks.values()).map(task => task.toJSON());
-      });
-
-      fs.writeFileSync(this.multiEventDataFile, JSON.stringify(tasksByEventData, null, 2));
-      logger.debug('Multi-event tasks saved to storage');
+      
+      const tasksArray = Array.from(this.tasks.values()).map(task => task.toJSON());
+      fs.writeFileSync(this.dataFile, JSON.stringify(tasksArray, null, 2));
+      logger.debug('Tasks saved to storage');
     } catch (error) {
       logger.error('Failed to save tasks:', error);
     }
-  }
-
-  // Helper methods for current event
-  getCurrentEventTasks() {
-    const currentEvent = eventManager.getCurrentEvent();
-    if (!currentEvent) return new Map();
-
-    if (!this.tasksByEvent.has(currentEvent.id)) {
-      this.tasksByEvent.set(currentEvent.id, new Map());
-    }
-    return this.tasksByEvent.get(currentEvent.id);
-  }
-
-  getTasksForEvent(eventId) {
-    if (!this.tasksByEvent.has(eventId)) {
-      this.tasksByEvent.set(eventId, new Map());
-    }
-    return this.tasksByEvent.get(eventId);
-  }
-
-  // Legacy property for backward compatibility
-  get tasks() {
-    return this.getCurrentEventTasks();
   }
 
   initializeDefaultTasks() {
@@ -222,12 +175,8 @@ class TaskManager {
   }
 
   getDaysUntilHackathon() {
-    const currentEvent = eventManager.getCurrentEvent();
-    if (!currentEvent) return 0;
-
     const now = new Date();
-    const eventDate = new Date(currentEvent.date);
-    const diffTime = eventDate - now;
+    const diffTime = this.hackathonDate - now;
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 

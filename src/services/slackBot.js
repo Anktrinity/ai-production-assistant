@@ -1,5 +1,6 @@
 const { App, ExpressReceiver } = require('@slack/bolt');
 const taskManager = require('./taskManager');
+const eventManager = require('./eventManager');
 const smartTaskCreator = require('./smartTaskCreator');
 const logger = require('../utils/logger');
 
@@ -74,6 +75,62 @@ class SlackBot {
         }
       } catch (error) {
         logger.error('Slack command error:', error);
+        await respond({
+          text: '❌ Sorry, something went wrong. Please try again.',
+          response_type: 'ephemeral'
+        });
+      }
+    });
+
+    // New Event command - same functionality as /hackathon but for new event
+    this.app.command('/newevent', async ({ command, ack, respond, client }) => {
+      await ack();
+
+      try {
+        // Switch to new event before processing commands
+        const currentEvent = eventManager.getCurrentEvent();
+        if (!currentEvent || currentEvent.id !== 'new-event-2025') {
+          eventManager.switchEvent('new-event-2025');
+        }
+
+        const args = command.text.trim().split(' ');
+        const action = args[0]?.toLowerCase();
+
+        switch (action) {
+          case 'status':
+            await this.handleStatusCommand(respond);
+            break;
+          case 'tasks':
+            await this.handleTasksCommand(args.slice(1), respond);
+            break;
+          case 'create':
+            await this.handleCreateCommand(args.slice(1).join(' '), respond);
+            break;
+          case 'assign':
+            await this.handleAssignCommand(args.slice(1), respond);
+            break;
+          case 'complete':
+            await this.handleCompleteCommand(args.slice(1), respond);
+            break;
+          case 'claim':
+          case 'take':
+            await this.handleClaimCommand(args.slice(1), command, respond);
+            break;
+          case 'gaps':
+            await this.handleGapsCommand(respond);
+            break;
+          case 'summary':
+            await this.handleSummaryCommand(respond);
+            break;
+          case 'switch':
+            await this.handleSwitchEventCommand(args.slice(1), respond);
+            break;
+          case 'help':
+          default:
+            await this.handleNewEventHelpCommand(respond);
+        }
+      } catch (error) {
+        logger.error('Slack newevent command error:', error);
         await respond({
           text: '❌ Sorry, something went wrong. Please try again.',
           response_type: 'ephemeral'
@@ -730,6 +787,81 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     };
 
     return await this.postToChannel(updateMessage);
+  }
+
+  async handleSwitchEventCommand(args, respond) {
+    if (args.length === 0) {
+      const events = eventManager.getAllEvents();
+      const currentEvent = eventManager.getCurrentEvent();
+
+      const eventsList = events.map(event => {
+        const status = event.id === currentEvent?.id ? '🟢 *Current*' : '⚪';
+        const daysLeft = eventManager.getDaysUntilEvent(event.id);
+        const daysText = daysLeft > 0 ? `${daysLeft} days left` : daysLeft === 0 ? 'Today!' : `${Math.abs(daysLeft)} days past`;
+        return `${status} **${event.name}** (${event.id})\n   📅 ${new Date(event.date).toLocaleDateString()} - ${daysText}\n   📝 ${event.description.substring(0, 60)}...`;
+      }).join('\n\n');
+
+      await respond({
+        text: '🔄 Available Events',
+        blocks: [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*Available Events:*\n\n${eventsList}\n\n*Usage:* \`/newevent switch [event-id]\``
+          }
+        }],
+        response_type: 'ephemeral'
+      });
+      return;
+    }
+
+    const eventId = args[0];
+    try {
+      const event = eventManager.switchEvent(eventId);
+      await respond({
+        text: `✅ Switched to: **${event.name}**`,
+        blocks: [{
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🔄 **Event Switched Successfully**\n\n🎯 **${event.name}**\n📅 ${new Date(event.date).toLocaleDateString()}\n📝 ${event.description}\n\n*All commands now operate on this event.*`
+          }
+        }],
+        response_type: 'in_channel'
+      });
+    } catch (error) {
+      await respond({
+        text: `❌ Event not found: ${eventId}. Use \`/newevent switch\` to see available events.`,
+        response_type: 'ephemeral'
+      });
+    }
+  }
+
+  async handleNewEventHelpCommand(respond) {
+    const currentEvent = eventManager.getCurrentEvent();
+    const eventName = currentEvent ? currentEvent.name : 'Unknown Event';
+    const eventDate = currentEvent ? new Date(currentEvent.date).toLocaleDateString() : 'Unknown Date';
+
+    await respond({
+      text: '🤖 New Event Assistant Commands',
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: `🤖 ${eventName} Assistant`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `📅 **Event Date:** ${eventDate}\n\n*Main Commands:*\n• \`/newevent status\` - Show overall progress\n• \`/newevent tasks [filter]\` - List tasks (overdue, upcoming, critical, pending)\n• \`/newevent create [description]\` - Create new task from description\n• \`/newevent claim [task ID]\` - Assign task to yourself\n• \`/newevent gaps\` - Identify planning gaps\n• \`/newevent summary\` - Daily progress summary\n• \`/newevent switch [event-id]\` - Switch between events\n\n*Quick Commands:*\n• \`/task [description]\` - Quick task creation (uses current event)\n• Mention @AI Production Assistant for general help\n• React with ✅ to mark tasks complete`
+          }
+        }
+      ],
+      response_type: 'ephemeral'
+    });
   }
 
   async stop() {

@@ -1,0 +1,45 @@
+{
+  "currentEventId": "new-event-2025",
+  "events": [
+    {
+      "id": "ai-hackathon-2025",
+      "name": "AI Hackathon",
+      "description": "The AI Hackathons goals are to build event pros real-world AI skills, foster hands-on learning and collaboration, create shareable resources and portfolio work, showcase new AI-driven event possibilities, and model effective, sustainable team processes—while addressing real-life constraints and sharing findings back to the industry.",
+      "date": "2025-09-24T09:00:00.000Z",
+      "status": "completed",
+      "categories": [
+        "tech",
+        "marketing",
+        "sponsors",
+        "content"
+      ],
+      "slackCommands": [
+        "/hackathon",
+        "/task",
+        "/assistant"
+      ],
+      "createdAt": "2025-09-29T12:44:08.949Z",
+      "completedAt": "2025-09-24T18:00:00.000Z"
+    },
+    {
+      "id": "new-event-2025",
+      "name": "New Event",
+      "description": "Fresh slate event for December 2025 with new goals and objectives.",
+      "date": "2025-12-31T09:00:00.000Z",
+      "status": "active",
+      "categories": [
+        "tech",
+        "marketing",
+        "sponsors",
+        "content"
+      ],
+      "slackCommands": [
+        "/newevent",
+        "/task",
+        "/assistant"
+      ],
+      "createdAt": "2025-09-29T12:44:08.950Z",
+      "completedAt": null
+    }
+  ]
+}

@@ -402,9 +402,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 AI Hackathon Production Assistant</h1>
+            <div class="event-switcher" style="margin-bottom: 20px;">
+                <select id="event-selector" onchange="switchEvent()" style="padding: 8px 15px; font-size: 1em; border: none; border-radius: 5px; background: rgba(255,255,255,0.9); color: #333;">
+                    <option value="">Loading events...</option>
+                </select>
+                <button onclick="refreshEvents()" style="margin-left: 10px; padding: 8px 12px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 5px; cursor: pointer;">🔄</button>
+            </div>
+            <h1 id="event-title">🎯 Event Production Assistant</h1>
             <div class="countdown" id="countdown">Loading...</div>
-            <p>Intelligent task management and timeline monitoring for September 24th</p>
+            <p id="event-description">Intelligent task management and timeline monitoring</p>
         </div>
 
         <div class="input-section">
@@ -435,7 +441,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-number days" id="days-left">0</div>
-                <div>Days Until Hackathon</div>
+                <div id="days-label">Days Until Event</div>
             </div>
         </div>
 
@@ -532,13 +538,133 @@
         const socket = io();
         let currentFilter = 'all';
         let allTasks = [];
+        let currentEvent = null;
+        let allEvents = [];
 
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
+            loadEvents();
             loadDashboardData();
             setupSocketListeners();
             startCountdown();
         });
+
+        // Event Management Functions
+        async function loadEvents() {
+            try {
+                const response = await fetch('/api/events');
+                const data = await response.json();
+
+                if (data.success) {
+                    allEvents = data.events;
+                    currentEvent = data.currentEvent;
+                    populateEventSelector();
+                    updateUIForCurrentEvent();
+                }
+            } catch (error) {
+                console.error('Failed to load events:', error);
+            }
+        }
+
+        function populateEventSelector() {
+            const selector = document.getElementById('event-selector');
+            selector.innerHTML = '';
+
+            allEvents.forEach(event => {
+                const option = document.createElement('option');
+                option.value = event.id;
+                option.textContent = `${event.name} (${new Date(event.date).toLocaleDateString()})`;
+                if (event.id === currentEvent?.id) {
+                    option.selected = true;
+                }
+                selector.appendChild(option);
+            });
+        }
+
+        function updateUIForCurrentEvent() {
+            if (!currentEvent) return;
+
+            document.getElementById('event-title').textContent = `🎯 ${currentEvent.name} Assistant`;
+            document.getElementById('event-description').textContent = currentEvent.description;
+
+            const daysLeft = Math.ceil((new Date(currentEvent.date) - new Date()) / (1000 * 60 * 60 * 24));
+            const eventName = currentEvent.name;
+            document.getElementById('days-label').textContent = `Days Until ${eventName}`;
+
+            // Update page title
+            document.title = `${eventName} Production Assistant`;
+        }
+
+        async function switchEvent() {
+            const selector = document.getElementById('event-selector');
+            const eventId = selector.value;
+
+            if (!eventId || eventId === currentEvent?.id) return;
+
+            try {
+                const response = await fetch('/api/events/switch', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ eventId })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentEvent = data.currentEvent;
+                    updateUIForCurrentEvent();
+                    loadDashboardData(); // Refresh all data for new event
+                    loadTasks();
+
+                    // Show success message
+                    showNotification(`✅ Switched to: ${currentEvent.name}`, 'success');
+                } else {
+                    showNotification(`❌ Failed to switch event: ${data.error}`, 'error');
+                    // Reset selector to current event
+                    selector.value = currentEvent?.id || '';
+                }
+            } catch (error) {
+                console.error('Failed to switch event:', error);
+                showNotification('❌ Failed to switch event', 'error');
+                selector.value = currentEvent?.id || '';
+            }
+        }
+
+        function refreshEvents() {
+            loadEvents();
+            showNotification('🔄 Events refreshed', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 5px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                max-width: 300px;
+                ${type === 'success' ? 'background: #4caf50;' :
+                  type === 'error' ? 'background: #f44336;' :
+                  'background: #2196f3;'}
+            `;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
 
         function setupSocketListeners() {
             socket.on('status_update', function(data) {

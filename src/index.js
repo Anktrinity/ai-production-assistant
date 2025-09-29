@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const logger = require('./utils/logger');
 const taskManager = require('./services/taskManager');
+const eventManager = require('./services/eventManager');
 const smartTaskCreator = require('./services/smartTaskCreator');
 const slackBot = require('./services/slackBot');
 const dailySummaryService = require('./services/dailySummaryService');
@@ -382,6 +383,116 @@ app.post('/api/analyze', async (req, res) => {
     });
   } catch (error) {
     logger.error('Analysis failed:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Event Management Routes
+app.get('/api/events', (req, res) => {
+  try {
+    const events = eventManager.getAllEvents();
+    const currentEvent = eventManager.getCurrentEvent();
+
+    res.json({
+      success: true,
+      events: events,
+      currentEvent: currentEvent,
+      total: events.length
+    });
+  } catch (error) {
+    logger.error('Failed to get events:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/events/current', (req, res) => {
+  try {
+    const currentEvent = eventManager.getCurrentEvent();
+
+    if (!currentEvent) {
+      return res.status(404).json({ success: false, error: 'No current event set' });
+    }
+
+    res.json({
+      success: true,
+      event: currentEvent,
+      daysUntilEvent: eventManager.getDaysUntilEvent(),
+      isActive: eventManager.isEventActive()
+    });
+  } catch (error) {
+    logger.error('Failed to get current event:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/events/switch', (req, res) => {
+  try {
+    const { eventId } = req.body;
+
+    if (!eventId) {
+      return res.status(400).json({ success: false, error: 'eventId is required' });
+    }
+
+    const event = eventManager.switchEvent(eventId);
+
+    res.json({
+      success: true,
+      message: `Switched to event: ${event.name}`,
+      currentEvent: event,
+      daysUntilEvent: eventManager.getDaysUntilEvent()
+    });
+  } catch (error) {
+    logger.error('Failed to switch event:', error);
+    res.status(400).json({ success: false, error: error.message });
+  }
+});
+
+app.post('/api/events/:eventId/import-tasks', (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { tasks } = req.body;
+
+    if (!eventId || !tasks || !Array.isArray(tasks)) {
+      return res.status(400).json({
+        success: false,
+        error: 'eventId and tasks array are required'
+      });
+    }
+
+    // Validate event exists
+    const event = eventManager.getEvent(eventId);
+    if (!event) {
+      return res.status(404).json({ success: false, error: 'Event not found' });
+    }
+
+    // Get current event tasks
+    const eventTasks = taskManager.getTasksForEvent(eventId);
+
+    // Import tasks
+    let importedCount = 0;
+    tasks.forEach(taskData => {
+      try {
+        // Create new task with event-specific data
+        const task = new (require('./models/Task'))(taskData);
+        eventTasks.set(task.id, task);
+        importedCount++;
+      } catch (error) {
+        logger.warn(`Failed to import task: ${error.message}`, { taskData });
+      }
+    });
+
+    // Save tasks
+    taskManager.saveTasks();
+
+    res.json({
+      success: true,
+      message: `Imported ${importedCount} tasks to ${event.name}`,
+      eventId,
+      importedCount,
+      totalTasks: eventTasks.size
+    });
+  } catch (error) {
+    logger.error('Failed to import tasks:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
