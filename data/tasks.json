@@ -907,5 +907,35 @@
     "daysUntilDue": 2,
     "isAtRisk": true,
     "urgencyLevel": "urgent"
+  },
+  {
+    "id": "task_1727603470000_postsurvey_email",
+    "title": "Send post-event survey to attendees",
+    "description": "Send post-event survey to attendees via email campaigns and social media posts. Survey link: https://vpcnhpkh.formester.com/f/zEMe2czO0",
+    "status": "pending",
+    "priority": "high",
+    "assignee": "Dax & Liz",
+    "dueDate": "2025-10-01T23:59:00.000Z",
+    "category": "post-event",
+    "dependencies": [],
+    "estimatedHours": 3,
+    "progress": 0,
+    "tags": [
+      "post-event",
+      "survey",
+      "marketing",
+      "attendees",
+      "email",
+      "social-media"
+    ],
+    "createdAt": "2025-09-29T12:30:00.000Z",
+    "updatedAt": "2025-09-29T12:30:00.000Z",
+    "completedAt": null,
+    "notes": [],
+    "isOnCriticalPath": false,
+    "isOverdue": false,
+    "daysUntilDue": 2,
+    "isAtRisk": false,
+    "urgencyLevel": "medium"
   }
 ]
