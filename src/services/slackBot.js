@@ -864,6 +864,68 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     });
   }
 
+  async postMorningReport() {
+    const currentEvent = eventManager.getCurrentEvent();
+    const allEvents = eventManager.getAllEvents();
+    const stats = taskManager.getCompletionStats();
+    const daysLeft = taskManager.getDaysUntilHackathon();
+
+    const morningReport = {
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: '🌅 Good Morning Team! Multi-Event System Update'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🎉 MAJOR UPDATE DEPLOYED! 🎉\n\nWe've successfully implemented a multi-event production assistant system that can now handle multiple events simultaneously!\n\n🔧 What's New:\n• Multi-Event Support - Switch between different events\n• Dynamic UI - Event switcher in dashboard\n• Data Separation - Each event has its own task list`
+          }
+        },
+        { type: 'divider' },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `📊 Current Event Status:\n🎯 ${currentEvent?.name || 'No Event'}\n📅 Date: ${currentEvent ? new Date(currentEvent.date).toLocaleDateString() : 'Unknown'}\n⏰ Days Left: ${daysLeft}\n📋 Tasks: ${stats.completed}/${stats.total} completed (${stats.completionRate}%)`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🗂️ Available Events:\n${allEvents.map(event => {
+              const eventDays = eventManager.getDaysUntilEvent(event.id);
+              const status = event.status === 'completed' ? '✅' : '🟢';
+              return `${status} ${event.name} (${eventDays > 0 ? `${eventDays} days` : eventDays === 0 ? 'Today!' : `${Math.abs(eventDays)} days past`})`;
+            }).join('\n')}`
+          }
+        },
+        { type: 'divider' },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🚀 How to Use:\n• /hackathon [command] - Access AI Hackathon tasks\n• Dashboard: Event switcher dropdown available\n• All your favorite commands work the same way! 🎊`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `📱 *Live Dashboard:* https://hackathon-hq-18fbc8a64df9.herokuapp.com/\n\nReady to plan your next event! 🌟`
+          }
+        }
+      ]
+    };
+
+    return await this.postToChannel(morningReport);
+  }
+
   async stop() {
     if (this.isStarted) {
       // With ExpressReceiver, no separate server to stop

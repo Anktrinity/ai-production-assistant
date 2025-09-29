@@ -591,6 +591,9 @@
             const eventName = currentEvent.name;
             document.getElementById('days-label').textContent = `Days Until ${eventName}`;
 
+            // Update countdown immediately
+            updateCountdown(daysLeft);
+
             // Update page title
             document.title = `${eventName} Production Assistant`;
         }
@@ -741,16 +744,19 @@
 
         function updateCountdown(daysLeft) {
             document.getElementById('days-left').textContent = daysLeft;
-            document.getElementById('countdown').textContent = `${daysLeft} days until AI Hackathon!`;
+            const eventName = currentEvent ? currentEvent.name : 'Event';
+            document.getElementById('countdown').textContent = `${daysLeft} days until ${eventName}!`;
         }
 
         function startCountdown() {
             setInterval(() => {
-                const now = new Date();
-                const hackathon = new Date('2025-09-24T09:00:00');
-                const diff = hackathon - now;
-                const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-                updateCountdown(Math.max(0, days));
+                if (currentEvent) {
+                    const now = new Date();
+                    const eventDate = new Date(currentEvent.date);
+                    const diff = eventDate - now;
+                    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                    updateCountdown(Math.max(0, days));
+                }
             }, 60000);
         }
 

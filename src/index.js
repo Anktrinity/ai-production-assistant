@@ -497,6 +497,27 @@ app.post('/api/events/:eventId/import-tasks', (req, res) => {
   }
 });
 
+app.post('/api/morning-report', async (req, res) => {
+  try {
+    const success = await slackBot.postMorningReport();
+
+    if (success) {
+      res.json({
+        success: true,
+        message: 'Morning report sent to Slack successfully'
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send morning report'
+      });
+    }
+  } catch (error) {
+    logger.error('Morning report failed:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Socket.IO for real-time updates
 io.on('connection', (socket) => {
   logger.info('Client connected:', socket.id);

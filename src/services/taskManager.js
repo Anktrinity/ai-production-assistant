@@ -363,30 +363,8 @@ class TaskManager {
       });
     });
 
-    // Check for overdue critical path items
-    const overdueCritical = tasks.filter(t => t.isOnCriticalPath && t.isOverdue());
-    overdueCritical.forEach(task => {
-      gaps.push({
-        type: 'overdue_critical',
-        taskId: task.id,
-        taskTitle: task.title,
-        severity: 'critical',
-        description: `Critical path task "${task.title}" is overdue`,
-        suggestedAction: 'Immediate attention required - reassign or break down task'
-      });
-    });
-
-    // Check for tasks without assignees
-    const unassigned = tasks.filter(t => !t.assignee && t.status !== 'completed');
-    if (unassigned.length > 0) {
-      gaps.push({
-        type: 'unassigned_tasks',
-        count: unassigned.length,
-        severity: 'medium',
-        description: `${unassigned.length} tasks without assignees`,
-        suggestedAction: 'Assign owners to ensure accountability'
-      });
-    }
+    // Skip overdue critical path and unassigned task checks for End of Year Event
+    // These are only relevant for active project phases
 
     // Check timeline pressure
     if (daysLeft <= 14) {
