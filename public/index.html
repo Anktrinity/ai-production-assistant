@@ -474,16 +474,14 @@
                 
                 <div class="slack-info">
                     <h4>🤖 Slack Integration Commands</h4>
-                    <p>Your AI assistant is available in Slack! Use these commands to manage your hackathon:</p>
-                    <div class="slack-commands">
-                        <div class="slack-command">/hackathon status</div>
-                        <div class="slack-command">/hackathon tasks overdue</div>
-                        <div class="slack-command">/hackathon create [task]</div>
-                        <div class="slack-command">/hackathon gaps</div>
-                        <div class="slack-command">/hackathon summary</div>
+                    <p id="slack-description">Your AI assistant is available in Slack! Use these commands to manage your event:</p>
+                    <div class="slack-commands" id="slack-commands-list">
+                        <div class="slack-command">/status</div>
                         <div class="slack-command">/task [description]</div>
+                        <div class="slack-command">/assistant [query]</div>
+                        <div class="slack-command">/help</div>
                     </div>
-                    <p style="margin-top: 10px;">💡 <strong>Pro tip:</strong> Mention @AI Production Assistant in any channel for general hackathon planning help!</p>
+                    <p style="margin-top: 10px;" id="slack-tip">💡 <strong>Pro tip:</strong> Mention @AI Production Assistant in any channel for general event planning help!</p>
                 </div>
                 
                 <h4>Bot Status</h4>
@@ -596,6 +594,51 @@
 
             // Update page title
             document.title = `${eventName} Production Assistant`;
+
+            // Update Slack commands based on current event
+            updateSlackCommands();
+        }
+
+        function updateSlackCommands() {
+            if (!currentEvent) return;
+
+            const slackDescription = document.getElementById('slack-description');
+            const slackCommandsList = document.getElementById('slack-commands-list');
+            const slackTip = document.getElementById('slack-tip');
+
+            // Update description
+            slackDescription.textContent = `Your AI assistant is available in Slack! Use these commands to manage your ${currentEvent.name}:`;
+
+            // Clear existing commands
+            slackCommandsList.innerHTML = '';
+
+            // Add event-specific commands
+            if (currentEvent.slackCommands && currentEvent.slackCommands.length > 0) {
+                currentEvent.slackCommands.forEach(command => {
+                    const commandDiv = document.createElement('div');
+                    commandDiv.className = 'slack-command';
+                    if (command === '/task') {
+                        commandDiv.textContent = `${command} [description]`;
+                    } else if (command === '/assistant') {
+                        commandDiv.textContent = `${command} [query]`;
+                    } else {
+                        commandDiv.textContent = command;
+                    }
+                    slackCommandsList.appendChild(commandDiv);
+                });
+            } else {
+                // Fallback commands
+                const fallbackCommands = ['/status', '/task [description]', '/assistant [query]', '/help'];
+                fallbackCommands.forEach(command => {
+                    const commandDiv = document.createElement('div');
+                    commandDiv.className = 'slack-command';
+                    commandDiv.textContent = command;
+                    slackCommandsList.appendChild(commandDiv);
+                });
+            }
+
+            // Update tip
+            slackTip.innerHTML = `💡 <strong>Pro tip:</strong> Mention @AI Production Assistant in any channel for general ${currentEvent.name} planning help!`;
         }
 
         async function switchEvent() {
@@ -1038,10 +1081,10 @@
                             <p><strong>Completion rate:</strong> ${summary.stats.completionRate}%</p>
                         </div>
                         
-                        ${summary.overdue.length > 0 ? `
+                        ${summary.overdue.length > 0 && summary.overdue.some(item => !item.title.includes('post-event') && !item.title.includes('survey')) ? `
                             <div style="margin-bottom: 20px;">
                                 <h4 style="color: #f56565;">🚨 Overdue Items</h4>
-                                ${summary.overdue.map(item => `
+                                ${summary.overdue.filter(item => !item.title.includes('post-event') && !item.title.includes('survey')).map(item => `
                                     <div style="margin: 5px 0; padding: 8px; background: #fed7d7; border-radius: 4px;">
                                         ${item.title} (${item.daysOverdue} days overdue)
                                     </div>
@@ -1202,10 +1245,10 @@
                     <p><strong>Total tasks:</strong> ${tasks.length}</p>
                 </div>
                 
-                ${overdueTasks.length > 0 ? `
+                ${overdueTasks.filter(task => !task.title.includes('post-event') && !task.title.includes('survey')).length > 0 ? `
                     <div style="margin-bottom: 20px;">
                         <h4 style="color: #f56565;">🚨 Overdue Items</h4>
-                        ${overdueTasks.slice(0, 3).map(task => `
+                        ${overdueTasks.filter(task => !task.title.includes('post-event') && !task.title.includes('survey')).slice(0, 3).map(task => `
                             <div style="margin: 5px 0; padding: 8px; background: #fed7d7; border-radius: 4px;">
                                 ${task.title} (${Math.abs(task.daysUntilDue)} days overdue)
                             </div>
