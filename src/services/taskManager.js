@@ -93,7 +93,9 @@ class TaskManager {
   }
 
   initializeDefaultTasks() {
-    if (this.tasks.size === 0) {
+    // Only initialize default tasks for AI Hackathon event, not fresh events
+    const currentEvent = eventManager.getCurrentEvent();
+    if (this.tasks.size === 0 && currentEvent && currentEvent.id === 'ai-hackathon-2025') {
       const defaultTasks = [
         // Virtual Event Tasks Only
         {

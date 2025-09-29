@@ -497,6 +497,27 @@ app.post('/api/events/:eventId/import-tasks', (req, res) => {
   }
 });
 
+app.post('/api/events/:eventId/clear-tasks', (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const eventTasks = taskManager.getTasksForEvent(eventId);
+    const clearedCount = eventTasks.size;
+
+    // Clear all tasks for this event
+    eventTasks.clear();
+    taskManager.saveTasks();
+
+    res.json({
+      success: true,
+      message: `Cleared ${clearedCount} tasks from event ${eventId}`,
+      clearedCount
+    });
+  } catch (error) {
+    logger.error('Failed to clear tasks:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 app.post('/api/morning-report', async (req, res) => {
   try {
     const success = await slackBot.postMorningReport();
