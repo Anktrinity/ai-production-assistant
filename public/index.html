@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Hackathon Production Assistant</title>
+    <title>Production Assistant</title>
     <style>
         * {
             margin: 0;
@@ -736,7 +736,8 @@
                 
                 if (data.success) {
                     updateStats(data.stats);
-                    updateCountdown(data.daysUntilHackathon);
+                    const eventDays = Math.ceil((new Date(currentEvent.date) - new Date()) / (1000 * 60 * 60 * 24));
+                    updateCountdown(eventDays);
                     displayGaps(data.gaps);
                 }
             } catch (error) {
@@ -1077,7 +1078,7 @@
                     container.innerHTML = `
                         <div style="margin-bottom: 20px;">
                             <h4>📊 Current Status</h4>
-                            <p><strong>Days until hackathon:</strong> ${summary.daysUntilHackathon}</p>
+                            <p><strong>Days until event:</strong> ${summary.daysUntilHackathon}</p>
                             <p><strong>Completion rate:</strong> ${summary.stats.completionRate}%</p>
                         </div>
                         
@@ -1114,8 +1115,8 @@
         function createVisualTimeline(tasks) {
             const chartContainer = document.getElementById('timeline-chart');
             const today = new Date();
-            const hackathonDate = new Date('2025-09-24');
-            const totalDays = Math.ceil((hackathonDate - today) / (1000 * 60 * 60 * 24));
+            const eventDate = new Date(currentEvent ? currentEvent.date : '2025-12-31');
+            const totalDays = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
             
             chartContainer.innerHTML = '';
             chartContainer.className = 'timeline-chart';
@@ -1132,7 +1133,7 @@
             chartContainer.appendChild(todayMarker);
             
             // Add date markers
-            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed hackathon
+            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed event
             dateMarkers.forEach(days => {
                 const markerDate = new Date(today);
                 markerDate.setDate(markerDate.getDate() + days);
@@ -1149,7 +1150,7 @@
                 const dueDate = new Date(task.dueDate);
                 const daysFromToday = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
                 
-                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
+                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to event
                     const taskElement = document.createElement('div');
                     taskElement.className = `timeline-task ${task.status}`;
                     taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
@@ -1163,21 +1164,21 @@
                 }
             });
             
-            // Add hackathon date marker
-            const hackathonMarker = document.createElement('div');
-            hackathonMarker.className = 'timeline-date';
-            hackathonMarker.textContent = 'HACKATHON!';
-            hackathonMarker.style.left = `${chartContainer.clientWidth - 60}px`;
-            hackathonMarker.style.color = '#f56565';
-            hackathonMarker.style.fontWeight = 'bold';
-            chartContainer.appendChild(hackathonMarker);
+            // Add event date marker
+            const eventMarker = document.createElement('div');
+            eventMarker.className = 'timeline-date';
+            eventMarker.textContent = currentEvent ? currentEvent.name.toUpperCase() + '!' : 'EVENT!';
+            eventMarker.style.left = `${chartContainer.clientWidth - 60}px`;
+            eventMarker.style.color = '#f56565';
+            eventMarker.style.fontWeight = 'bold';
+            chartContainer.appendChild(eventMarker);
         }
 
         function createTimelineMain(tasks) {
             const chartContainer = document.getElementById('timeline-chart-main');
             const today = new Date();
-            const hackathonDate = new Date('2025-09-24');
-            const totalDays = Math.ceil((hackathonDate - today) / (1000 * 60 * 60 * 24));
+            const eventDate = new Date(currentEvent ? currentEvent.date : '2025-12-31');
+            const totalDays = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
             
             chartContainer.innerHTML = '';
             
@@ -1193,7 +1194,7 @@
             chartContainer.appendChild(todayMarker);
             
             // Add date markers
-            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed hackathon
+            const dateMarkers = [0, 7, 14, 21].filter(days => days <= totalDays); // Days from today, filtered to not exceed event
             dateMarkers.forEach(days => {
                 const markerDate = new Date(today);
                 markerDate.setDate(markerDate.getDate() + days);
@@ -1210,7 +1211,7 @@
                 const dueDate = new Date(task.dueDate);
                 const daysFromToday = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
                 
-                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to hackathon
+                if (daysFromToday >= -5 && daysFromToday <= totalDays) { // Show tasks from 5 days ago to event
                     const taskElement = document.createElement('div');
                     taskElement.className = `timeline-task ${task.status}`;
                     taskElement.textContent = task.title.substring(0, 20) + (task.title.length > 20 ? '...' : '');
@@ -1224,14 +1225,14 @@
                 }
             });
             
-            // Add hackathon date marker
-            const hackathonMarker = document.createElement('div');
-            hackathonMarker.className = 'timeline-date';
-            hackathonMarker.textContent = 'HACKATHON!';
-            hackathonMarker.style.left = `${chartContainer.clientWidth - 60}px`;
-            hackathonMarker.style.color = '#f56565';
-            hackathonMarker.style.fontWeight = 'bold';
-            chartContainer.appendChild(hackathonMarker);
+            // Add event date marker
+            const eventMarker = document.createElement('div');
+            eventMarker.className = 'timeline-date';
+            eventMarker.textContent = currentEvent ? currentEvent.name.toUpperCase() + '!' : 'EVENT!';
+            eventMarker.style.left = `${chartContainer.clientWidth - 60}px`;
+            eventMarker.style.color = '#f56565';
+            eventMarker.style.fontWeight = 'bold';
+            chartContainer.appendChild(eventMarker);
 
             // Update content section
             const contentContainer = document.getElementById('timeline-content-main');
@@ -1241,7 +1242,7 @@
             contentContainer.innerHTML = `
                 <div style="margin-bottom: 20px;">
                     <h4>📊 Current Status</h4>
-                    <p><strong>Days until hackathon:</strong> ${totalDays}</p>
+                    <p><strong>Days until event:</strong> ${totalDays}</p>
                     <p><strong>Total tasks:</strong> ${tasks.length}</p>
                 </div>
                 
@@ -1299,7 +1300,7 @@
         }
 
         // Task Assignment Functions
-        let currentUserName = localStorage.getItem('hackathonUserName') || '';
+        let currentUserName = localStorage.getItem('eventUserName') || '';
 
         function setUserName() {
             const nameInput = document.getElementById('userName');
@@ -1311,7 +1312,7 @@
             }
             
             currentUserName = name;
-            localStorage.setItem('hackathonUserName', name);
+            localStorage.setItem('eventUserName', name);
             updateCurrentUserDisplay();
             nameInput.value = '';
         }
