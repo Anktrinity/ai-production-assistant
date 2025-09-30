@@ -950,31 +950,8 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
   }
 
   async postTaskNotification(task) {
-    const currentEvent = eventManager.getCurrentEvent();
     const taskNotification = {
-      blocks: [
-        {
-          type: 'header',
-          text: {
-            type: 'plain_text',
-            text: '📋 New Task Created'
-          }
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `📝 ${task.title}\n👤 ${task.assignee}\n📅 ${new Date(task.dueDate).toLocaleDateString()}\n\n${task.description}`
-          }
-        },
-        {
-          type: 'section',
-          text: {
-            type: 'mrkdwn',
-            text: `🔗 https://hackathon-hq-18fbc8a64df9.herokuapp.com/`
-          }
-        }
-      ]
+      text: `${task.title} - ${task.assignee} - ${new Date(task.dueDate).toLocaleDateString()}`
     };
 
     return await this.postToChannel(taskNotification);
