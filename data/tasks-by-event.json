@@ -746,32 +746,6 @@
       "urgencyLevel": "urgent"
     },
     {
-      "id": "task_1758071432122_xwsgiuf95",
-      "title": "Fill out post con and tools sheet",
-      "description": "Complete the post con and tools sheet with necessary details",
-      "status": "pending",
-      "priority": "medium",
-      "assignee": "jlgiobres",
-      "dueDate": "2025-09-29",
-      "category": "logistics",
-      "dependencies": [],
-      "estimatedHours": 2,
-      "progress": 0,
-      "tags": [
-        "post-event",
-        "documentation"
-      ],
-      "createdAt": "2025-09-17T01:10:32.122Z",
-      "updatedAt": "2025-09-17T01:10:32.122Z",
-      "completedAt": null,
-      "notes": [],
-      "isOnCriticalPath": false,
-      "isOverdue": true,
-      "daysUntilDue": -1,
-      "isAtRisk": true,
-      "urgencyLevel": "overdue"
-    },
-    {
       "id": "task_1758164800000_polls4event",
       "title": "Provide Polls for Event",
       "description": "Create and set up interactive polls for the AI Hackathon event to engage attendees and gather feedback during presentations and sessions.",
@@ -882,9 +856,9 @@
     },
     {
       "id": "task_1758575571306_7e02mrdgr",
-      "title": "🚨 URGENT: All Teams Complete Post-Con Documentation",
-      "description": "ALL TEAMS MUST complete the post-con and tools sheet TODAY. This is CRITICAL for event wrap-up. Access here: https://docs.google.com/spreadsheets/d/137f0CV4HWFzYM_wo1VpMjG2yEHmTODY9RwN4MeGzaFY/edit?gid=0#gid=0",
-      "status": "in_progress",
+      "title": "Complete Post-Con Documentation",
+      "description": "Complete the post-con and tools sheet with necessary details. Access here: https://docs.google.com/spreadsheets/d/137f0CV4HWFzYM_wo1VpMjG2yEHmTODY9RwN4MeGzaFY/edit?gid=0#gid=0",
+      "status": "completed",
       "priority": "critical",
       "assignee": "ALL TEAMS",
       "dueDate": "2025-09-23T23:59:00Z",
