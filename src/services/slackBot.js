@@ -964,7 +964,7 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `🎯 Event: ${currentEvent?.name || 'Unknown Event'}\n\n📝 Task: ${task.title}\n👤 Assigned to: ${task.assignee}\n📅 Due: ${new Date(task.dueDate).toLocaleDateString()}\n⏰ Estimated: ${task.estimatedHours} hours\n🔹 Priority: ${task.priority}\n\n📋 Description:\n${task.description}`
+            text: `🎯 Event: ${currentEvent?.name || 'Unknown Event'}\n\n📝 Task: ${task.title}\n👤 Assigned to: ${task.assignee}\n📅 Due: ${new Date(task.dueDate).toLocaleDateString()}\n\n📋 Description:\n${task.description}`
           }
         },
         {
