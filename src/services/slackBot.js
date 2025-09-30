@@ -964,14 +964,14 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `🎯 Event: ${currentEvent?.name || 'Unknown Event'}\n\n📝 Task: ${task.title}\n👤 Assigned to: ${task.assignee}\n📅 Due: ${new Date(task.dueDate).toLocaleDateString()}\n\n📋 Description:\n${task.description}`
+            text: `📝 ${task.title}\n👤 ${task.assignee}\n📅 ${new Date(task.dueDate).toLocaleDateString()}\n\n${task.description}`
           }
         },
         {
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: `🔗 View in dashboard: https://hackathon-hq-18fbc8a64df9.herokuapp.com/\n\nUse /status to see all current tasks for ${currentEvent?.name || 'this event'}!`
+            text: `🔗 https://hackathon-hq-18fbc8a64df9.herokuapp.com/`
           }
         }
       ]
