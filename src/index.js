@@ -560,6 +560,34 @@ app.post('/api/platform-update', async (req, res) => {
   }
 });
 
+app.post('/api/tasks/:taskId/notify', async (req, res) => {
+  try {
+    const { taskId } = req.params;
+    const task = taskManager.getTask(taskId);
+
+    if (!task) {
+      return res.status(404).json({ success: false, error: 'Task not found' });
+    }
+
+    const success = await slackBot.postTaskNotification(task);
+
+    if (success) {
+      res.json({
+        success: true,
+        message: 'Task notification sent to Slack successfully'
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Failed to send task notification'
+      });
+    }
+  } catch (error) {
+    logger.error('Task notification failed:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // Socket.IO for real-time updates
 io.on('connection', (socket) => {
   logger.info('Client connected:', socket.id);

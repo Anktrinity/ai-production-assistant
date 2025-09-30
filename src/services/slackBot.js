@@ -949,6 +949,37 @@ text: '*Main Commands:*\n• `/hackathon status` - Show overall progress\n• `/
     return await this.postToChannel(platformUpdate);
   }
 
+  async postTaskNotification(task) {
+    const currentEvent = eventManager.getCurrentEvent();
+    const taskNotification = {
+      blocks: [
+        {
+          type: 'header',
+          text: {
+            type: 'plain_text',
+            text: '📋 New Task Created'
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🎯 Event: ${currentEvent?.name || 'Unknown Event'}\n\n📝 Task: ${task.title}\n👤 Assigned to: ${task.assignee}\n📅 Due: ${new Date(task.dueDate).toLocaleDateString()}\n⏰ Estimated: ${task.estimatedHours} hours\n🔹 Priority: ${task.priority}\n\n📋 Description:\n${task.description}`
+          }
+        },
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `🔗 View in dashboard: https://hackathon-hq-18fbc8a64df9.herokuapp.com/\n\nUse /status to see all current tasks for ${currentEvent?.name || 'this event'}!`
+          }
+        }
+      ]
+    };
+
+    return await this.postToChannel(taskNotification);
+  }
+
   async stop() {
     if (this.isStarted) {
       // With ExpressReceiver, no separate server to stop
